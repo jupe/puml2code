@@ -4,11 +4,11 @@
   "description": "PlantUML to code generator",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "MOCHA_FILE=junit/test-results.xml istanbul cover -- _mocha --recursive -R mocha-circleci-reporter"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/opentmi/pumlgen.git"
+    "url": "git+https://github.com/jupe/pumlgen.git"
   },
   "keywords": [
     "plantuml",
@@ -22,12 +22,14 @@
   "author": "Jussi Vatjus-Anttila",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/opentmi/pumlgen/issues"
+    "url": "https://github.com/jupe/pumlgen/issues"
   },
-  "homepage": "https://github.com/opentmi/pumlgen#readme",
+  "homepage": "https://github.com/jupe/pumlgen#readme",
   "dependencies": {
     "camelcase": "^5.0.0",
+    "chai": "^4.2.0",
     "handlebars": "^4.1.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "mocha-circleci-reporter": "0.0.3"
   }
 }

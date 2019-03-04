@@ -3,7 +3,7 @@
 Tool that convert Plantuml -text file that represent UML diagram to code.
 
 ### Project status
-**IN PROGRESS**
+**HEAVILY IN PROGRESS**
 
 - [ ] core implementation
 - [ ] CLI interface
