@@ -1,0 +1,32 @@
+{
+  "name": "pumlgen",
+  "version": "0.1.0",
+  "description": "PlantUML to code generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opentmi/pumlgen.git"
+  },
+  "keywords": [
+    "plantuml",
+    "puml",
+    "code",
+    "generator",
+    "uml",
+    "class",
+    "diagram"
+  ],
+  "author": "Jussi Vatjus-Anttila",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/opentmi/pumlgen/issues"
+  },
+  "homepage": "https://github.com/opentmi/pumlgen#readme",
+  "dependencies": {
+    "camelcase": "^5.0.0",
+    "lodash": "^4.17.11"
+  }
+}
