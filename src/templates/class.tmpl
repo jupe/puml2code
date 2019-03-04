@@ -1,0 +1,34 @@
+// native modules
+// 3rd party modules
+// application modules
+{{#each imports}}
+const {{module}} = require('./{{module}});
+{{/each}}
+
+/**
+ * Class {{name}}
+ */
+class {{name}} {
+    {{#if methods.constructor}}
+    /**
+     * {{name}} constructor{{#each methods.constructor.parameters}}
+     * @param {{name}} {{camelCase}} TBD{{/each}}
+     */
+    constructor({{methods.constructor.parametersCamelCaseJoined}}) {
+        {{#each variables}}
+        this.{{privacy}}{{name}} = {{name}};
+        {{/each}}
+    }{{/if}}
+{{#each methods}}{{#if isNotConstructor}}
+    /**
+     * Function {{privacy}}{{name}}
+{{#each parametersCamelCase}}     * @param {{this}} {{this}}
+{{/each}}
+     */
+    {{#if asyncronous}}{{asyncronous}} {{/if}}{{privacy}}{{name}}({{parametersCamelCaseJoined}}) {
+        // TBD
+    }
+    {{/if}}{{/each}}
+}
+
+module.exports = {{name}}

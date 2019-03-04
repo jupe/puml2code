@@ -1,9 +1,13 @@
 const {createInterface} = require('readline');
-const {createReadStream} = require('fs');
+const {createReadStream, readFileSync} = require('fs');
+// 3rd party modules
+const Handlebars = require('handlebars');
 const _ = require('lodash');
 const camelCase = require('camelcase');
 
+
 const dummyLogger = {debug: console.log, silly: console.log};
+
 
 class Output {
     constructor(files, {logger}) {
@@ -64,6 +68,11 @@ class PlantUmlCodeGenerator {
         return files;
     }
 
+    _readTemplates() {
+        const source = readFileSync('./src/templates/class.tmpl').toString();
+        return Handlebars.compile(source);
+    }
+
     /**
      *
      * @param cls
@@ -71,64 +80,33 @@ class PlantUmlCodeGenerator {
      * @private
      */
     _toCode(cls) {
-         let str = '';
-         const deps = _.reduce(cls.methods, (acc, cls, name) => {
-            const tmp = _.reduce(cls.parameters, (cAcc, param) => {
-                if(param[0] === param[0].toUpperCase()) {
-                    cAcc[param] = true;
+         const template = this._readTemplates();
+
+         // generate getters
+         _.each(cls.methods, (method) => {
+             Object.defineProperty(method, "parametersCamelCase", {
+                get() {
+                   return _.map(method.parameters, opt => opt.camelCase);
                 }
-                return cAcc;
-            }, {});
-            return _.merge(acc, tmp);
-        }, {});
-        str += '// native modules\n'
-        str += '// 3rd party modules\n'
-        str += '// application modules\n'
-        _.each(deps, (__, dep) => {
-            str += `const ${dep} = require('./${dep}');\n`;
-        });
-        str += `\n\n/**\n * Class ${cls.name}\n */\n`;
-
-
-        str += `class ${cls.name} {\n`;
-        if (_.keys(cls.variables).length > 0 || _.has(cls.methods, 'constructor')) {
-
-            str += '    /**\n';
-            str += '     * TBD\n';
-            str += '     */\n';
-            str += '    constructor(';
-            let ctrParameters = [];
-            if (cls.methods.constructor) {
-                ctrParameters= cls.methods.constructor.parameters || [];
-                str += _.map(ctrParameters, _.toLower).join(', ');
-            }
-            str += ') {\n';
-
-            _.each(cls.variables, (variable, name) => {
-                const _name = camelCase(name);
-                const privacy = variable.privacy;
-                const value = ctrParameters.indexOf(_name) >= 0 ? _name : 'undefined';
-                str += `        this.${privacy}${_name} = ${value};\n`;
-            });
-            str += `    }\n\n`;
-        }
-        _.each(cls.methods, (method, name) => {
-            if (name === 'constructor') return;
-            str += '    /**\n'
-            _.each(method.parameters, (param) => {
-                str += `     * @param ${param} TBD\n`;
-            });
-            if (method.type) {
-                str += `     * @return ${method.type} TBD\n`
-            }
-            const parameters = _.map(method.parameters, _.toLower).join(', ');
-            str += '     */\n';
-            str += `    ${method.privacy}${name}(${parameters}) {\n`;
-            str += `        // TBD\n`;
-            str += `    }\n\n`;
-        });
-        str += '}\n';
-        return str;
+             });
+             Object.defineProperty(method, "parametersCamelCaseJoined", {
+                get() {
+                   return _.map(method.parameters, param => param.camelCase)
+                       .join(', ');
+                }
+             });
+         });
+         // figure out dependencies
+         cls.imports =  _.reduce(cls.methods, (acc, cls, name) => {
+                const tmp = _.reduce(cls.parameters, (cAcc, module) => {
+                    if(module.name[0] === module.name[0].toUpperCase()) {
+                        cAcc.push({module: module.name});
+                    }
+                    return cAcc;
+                }, []);
+                return _.merge(acc, tmp);
+             }, []);
+         return template(cls);
     }
     _setState(state) {
         this._state = state;
@@ -191,9 +169,18 @@ class PlantUmlCodeGenerator {
          if (m) {
              let [,privacyKey, asyncronous, type, name, parameters] = m;
              parameters = parameters ? parameters.split(', ') : [];
+             parameters = _.reduce(parameters, (acc, param) => {
+                 acc.push({
+                     name: param,
+                     camelCase: camelCase(param)
+                 });
+                 return acc;
+             }, []);
              const privacy = privacyMap[privacyKey];
              this.logger.debug(`[${this._currentClass.name}].method:`, privacy, asyncronous, type, name, parameters);
              this._currentClass.methods[name] = {
+                 name,
+                 isNotConstructor: name !== 'constructor',
                  privacy,
                  asyncronous,
                  parameters,
@@ -209,6 +196,7 @@ class PlantUmlCodeGenerator {
              const privacy = privacyMap[privacyKey];
              this.logger.debug(`[${this._currentClass.name}].var:`, privacy, type, name);
              this._currentClass.variables[name] = {
+                 name,
                  type,
                  privacy
              };

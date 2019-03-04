@@ -27,6 +27,7 @@
   "homepage": "https://github.com/opentmi/pumlgen#readme",
   "dependencies": {
     "camelcase": "^5.0.0",
+    "handlebars": "^4.1.0",
     "lodash": "^4.17.11"
   }
 }
