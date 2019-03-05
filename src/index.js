@@ -41,7 +41,7 @@ class PlantUmlToCode {
     return new PlantUmlToCode(createReadStream(file));
   }
 
-  async generate() {
+  async generate(lang) {
     this.logger.silly('Create interface');
     const lineReader = createInterface(this._stream);
     this.logger.silly('Read lines');
@@ -49,34 +49,42 @@ class PlantUmlToCode {
     this.logger.silly('Ready');
     this.logger.debug(this._classes);
     this.logger.debug('\n');
-    return new Output(this._toSourceFiles(), { logger: this.logger });
+    return new Output(this._toSourceFiles(lang), { logger: this.logger });
   }
 
-  _toSourceFiles() {
+  _toSourceFiles(lang) {
     const files = {};
     _.each(this._classes, (cls) => {
       const filename = camelCase(cls.name, { pascalCase: true });
-      files[`${filename}.js`] = this._toCode(cls);
+      files[`${filename}.js`] = this._toCode(cls, lang);
     });
     return files;
   }
 
-  _readTemplates() {
-    const tmpl = './src/templates/class.tmpl';
+  _readTemplates(lang) {
+    const tmpl = `./src/templates/${lang}.tmpl`;
     this.logger.silly(`Read template: ${tmpl}`);
     const source = readFileSync(tmpl).toString();
     return Handlebars.compile(source);
   }
 
   /**
-     *
-     * @param cls
-     * @returns {string}
-     * @private
-     */
-  _toCode(cls) {
-    const template = this._readTemplates();
+   *
+   * @param {Object} cls class object
+   * @param {string} lang Target language
+   * @returns {string} class code as a string
+   * @private
+   */
+  _toCode(cls, lang) {
+    if (['es6'].indexOf(lang) < 0) {
+      throw new Error(`Language ${lang} is not supported`);
+    }
+    const template = this._readTemplates(lang);
+    return this._toES6(cls, template);
+  }
 
+  _toES6(cls, template) {
+    this.logger.debug('Generate ES6 code');
     Handlebars.registerHelper('raw', options => options.fn());
 
     // generate getters
