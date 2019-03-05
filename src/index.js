@@ -108,6 +108,8 @@ class PlantUmlCodeGenerator {
                 }, []);
                 return _.merge(acc, tmp);
              }, []);
+
+         // Render class template with content
          return template(cls);
     }
     _setState(state) {
