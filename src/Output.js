@@ -11,14 +11,15 @@ class Output {
     this._files = files;
   }
 
-  print() {
+  print(log = console.log) { // eslint-disable-line no-console
     _.each(this._files, (content, file) => {
-      console.log(`${file}:`); // eslint-disable-line no-console
-      console.log(`${content}\n`); // eslint-disable-line no-console
+      log(`${file}:`);
+      log(`${content}\n`);
     });
   }
 
   async save(path) {
+    this.logger.debug(`Write files ${_.map(this._files, (content, file) => file)} to path: ${path}`);
     const writer = (content, file) => Promise.fromCallback(cb => writeFile(join(path, file), content, cb));
     const pendings = _.map(this._files, writer);
     return Promise.all(pendings);

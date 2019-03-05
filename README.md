@@ -1,25 +1,36 @@
+[![CircleCI](https://circleci.com/gh/jupe/puml2code/tree/master.svg?style=svg)](https://circleci.com/gh/jupe/puml2code/tree/master)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![License badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://img.shields.io)
+
+
 ## PlantUML code generator (puml2code)
 
-Tool that convert Plantuml -text file that represent UML diagram to code.
+Tool that convert Plantuml -text file that represent class UML diagram to source code.
 
 ### Project status
 **POC/IN PROGRESS**
 
-- [ ] core implementation
+- [x] core implementation
 - [x] CLI interface
 - [x] JS interface
+- [x] ES6 output
 - [ ] unit tests
 - [ ] e2e tests
 - [ ] documentation
 
+### Installation
+
+```
+$ npm i -g puml2code
+```
+
 ### Supported features
-* output: file/console per class
-* ES6 class
-* imports based on parameter
-* camelCase conversion
-* private variables (with underscore prefix)
-* methods with parameters
-* code documentation
+* output: file per class/console
+* target language: es6 with code documentation
+  * imports based on parameter
+  * camelCase conversion
+  * private variables (with underscore prefix)
+  * methods with parameters
 
 ### Usage
 

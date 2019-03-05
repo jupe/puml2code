@@ -1,16 +1,19 @@
 {
   "name": "puml2code",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "PlantUML to code generator",
   "main": "index.js",
   "bin": {
-    "puml2code": "npm run cli"
+    "puml2code": "./bin/puml2code"
   },
   "scripts": {
     "cli": "node src/cli.js",
     "test": "MOCHA_FILE=junit/test-results.xml istanbul cover -- _mocha --recursive -R mocha-circleci-reporter",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   },
   "repository": {
     "type": "git",
@@ -40,12 +43,14 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "eslint": "^5.15.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-chai-expect": "^2.0.1",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-mocha": "^5.3.0",
-    "istanbul": "^0.4.5",
-    "mocha-circleci-reporter": "0.0.3"
+    "istanbul": "^1.1.0-alpha.1",
+    "mocha-circleci-reporter": "0.0.3",
+    "sinon": "^7.2.7"
   }
 }
