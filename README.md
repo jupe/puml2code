@@ -1,4 +1,4 @@
-## PlantUML code generator (pumlgen)
+## PlantUML code generator (puml2code)
 
 Tool that convert Plantuml -text file that represent UML diagram to code.
 
@@ -22,7 +22,8 @@ Tool that convert Plantuml -text file that represent UML diagram to code.
 
 ### Example
 ```
-const platnuml = PlantUmlCodeGenerator.fromFile('./file.puml');
+const PlantUmlToCode = require('puml2code');
+const platnuml = PlantUmlToCode.fromFile('./file.puml');
 platnuml.generate()
     .then((out) => out.print());
 ```
@@ -49,14 +50,14 @@ class Scheduler {
     }
 
     /**
-     * @param Queue TBD
+     * @param {Queue} queue TBD
      */
     _test(queue) {
         // TBD
     }
 
     /**
-     * @param Queue TBD
+     * @param {Queue} queue TBD
      */
     __protected(queue) {
         // TBD

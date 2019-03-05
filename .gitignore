@@ -58,3 +58,4 @@ typings/
 .env
 
 browser-test.js
+.idea

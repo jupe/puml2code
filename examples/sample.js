@@ -1,6 +1,6 @@
-const PlantUmlCodeGenerator = require('../src');
+const PlantUmlToCode = require('../src');
 
 
-const platnuml = PlantUmlCodeGenerator.fromFile('./examples/sample.puml');
+const platnuml = PlantUmlToCode.fromFile('./examples/sample.puml');
 platnuml.generate()
   .then(out => out.print());

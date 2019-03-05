@@ -32,7 +32,7 @@ class Output {
   }
 }
 
-class PlantUmlCodeGenerator {
+class PlantUmlToCode {
   constructor(stream, { logger = dummyLogger } = {}) {
     this._classes = {};
     this._currentClass = undefined;
@@ -53,11 +53,11 @@ class PlantUmlCodeGenerator {
     stream._read = () => {}; // redundant? see update below
     stream.push(str);
     stream.push(null);
-    return new PlantUmlCodeGenerator(stream);
+    return new PlantUmlToCode(stream);
   }
 
   static fromFile(file) {
-    return new PlantUmlCodeGenerator(createReadStream(file));
+    return new PlantUmlToCode(createReadStream(file));
   }
 
   async generate() {
@@ -179,8 +179,8 @@ class PlantUmlCodeGenerator {
     m = line.match(/([+#-])(async)?([\S]+(?=\s))?[\s]*([\S]+(?=\())\((.*)\)/);
     if (m) {
       const [, privacyKey, asyncronous, type, name, paramStr] = m;
-      const parameters = PlantUmlCodeGenerator._parseParameters(paramStr);
-      const privacy = PlantUmlCodeGenerator.PrivacyMap[privacyKey];
+      const parameters = PlantUmlToCode._parseParameters(paramStr);
+      const privacy = PlantUmlToCode.PrivacyMap[privacyKey];
       this.logger.debug(`[${this._currentClass.name}].method:`, privacy, asyncronous, type, name, parameters);
       return this._addMethod(name, privacy, asyncronous, parameters, type);
     }
@@ -189,7 +189,7 @@ class PlantUmlCodeGenerator {
     m = line.match(/([+#-])?(([\S]+)([\s]+))?([\S]+)/);
     if (m) {
       const [, privacyKey,, type,, name, notes] = m;
-      const privacy = PlantUmlCodeGenerator.PrivacyMap[privacyKey];
+      const privacy = PlantUmlToCode.PrivacyMap[privacyKey];
       this.logger.debug(`[${this._currentClass.name}].var:`, privacy, type, name);
       return this._addVariable(name, type, privacy, notes);
     }
@@ -258,4 +258,4 @@ class PlantUmlCodeGenerator {
   }
 }
 
-module.exports = PlantUmlCodeGenerator;
+module.exports = PlantUmlToCode;

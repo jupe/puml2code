@@ -1,5 +1,5 @@
 {
-  "name": "pumlgen",
+  "name": "puml2code",
   "version": "0.1.0",
   "description": "PlantUML to code generator",
   "main": "index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jupe/pumlgen.git"
+    "url": "git+https://github.com/jupe/puml2ode.git"
   },
   "keywords": [
     "plantuml",
@@ -24,9 +24,9 @@
   "author": "Jussi Vatjus-Anttila",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jupe/pumlgen/issues"
+    "url": "https://github.com/jupe/puml2ode/issues"
   },
-  "homepage": "https://github.com/jupe/pumlgen#readme",
+  "homepage": "https://github.com/jupe/puml2ode#readme",
   "dependencies": {
     "bluebird": "^3.5.3",
     "camelcase": "^5.0.0",
