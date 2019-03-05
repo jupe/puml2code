@@ -1,0 +1,93 @@
+version: 2
+
+workflows:
+  version: 2
+  test-publish:
+    jobs:
+      - test-node8:
+          filters:  # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /.*/
+      - test-node10:
+          filters:  # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /.*/
+      - test-node-latest:
+          filters:  # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /.*/
+      - publish:
+          requires:
+            - test-node8
+            - test-node10
+            - test-node-latest
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+  - image: circleci/node:8.12.0
+  steps:
+    - checkout
+    - run: node --version > _tmp_file
+    - restore_cache:
+        key: dependency-cache-{{ checksum "_tmp_file" }}-{{ checksum "package.json" }}
+    - run:
+        name: npm-install
+        command: npm install
+
+    - save_cache:
+        key: dependency-cache-{{ checksum "_tmp_file" }}-{{ checksum "package.json" }}
+        paths:
+          - ./node_modules
+    - run:
+        name: test
+        command: npm test
+        environment:
+          REPORTER: mocha-circleci-reporter
+          MOCHA_FILE: junit/test-results.xml
+    #- run:
+    #    name: coveralls
+    #    command: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+    - run:
+        name: lint
+        command: npm run lint
+        when: always
+    - store_test_results:
+        path: junit
+    - store_artifacts:
+        path: junit
+    - store_artifacts:
+        path: coverage
+        prefix: coverage
+jobs:
+  test-node8:
+    <<: *defaults
+    docker:
+    - image: circleci/node:8.12.0
+  test-node10:
+    <<: *defaults
+    docker:
+    - image: circleci/node:10.14.1
+  test-node-latest:
+    <<: *defaults
+    docker:
+    - image: circleci/node:latest
+  publish:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: node --version > _tmp_file
+      - restore_cache:
+          key: dependency-cache-{{ checksum "_tmp_file" }}-{{ checksum "package.json" }}
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish

@@ -1,0 +1,18 @@
+{
+    "env": {
+        "mocha": true
+    },
+    "plugins": [
+        "mocha",
+        "chai-expect"
+    ],
+    "rules": {
+        "mocha/no-exclusive-tests": "error",
+        "chai-expect/missing-assertion": "error",
+        "chai-expect/terminating-properties": "error",
+        "no-unused-expressions": "off",
+        "prefer-arrow-callback": "off",
+        "func-names": "off",
+        "no-underscore-dangle": "off"
+    }
+}

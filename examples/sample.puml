@@ -1,0 +1,11 @@
+@startuml
+title Allocation queue - Class Diagram
+
+class Scheduler {
+    +constructor(Queue, Resources)
+    -test(Queue)
+    #async protected(Queue)
+    -Queue _queue
+    -Resources _resoures: list of resources
+}
+@enduml
