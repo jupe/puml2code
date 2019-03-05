@@ -30,6 +30,9 @@ class PlantUmlToCode {
   }
 
   static fromString(str) {
+    if(!_.isString(str)) {
+      throw new TypeError('str should be an String');
+    }
     const stream = new Readable();
     stream._read = () => {}; // redundant? see update below
     stream.push(str);
@@ -41,7 +44,7 @@ class PlantUmlToCode {
     return new PlantUmlToCode(createReadStream(file));
   }
 
-  async generate(lang) {
+  async generate(lang = 'es6') {
     this.logger.silly('Create interface');
     const lineReader = createInterface(this._stream);
     this.logger.silly('Read lines');
@@ -80,7 +83,7 @@ class PlantUmlToCode {
       const template = this._readTemplates(lang);
       return this._toClassCode(cls, template);
     } catch (error) {
-      throw new Error(`Language ${lang} is not supported`);
+      throw new TypeError(`Language ${lang} is not supported`);
     }
   }
 
@@ -161,6 +164,10 @@ class PlantUmlToCode {
     m = line.match(/title\s+([\S\s]+)/);
     if (m) {
       return this._setTitle(m[1]);
+    }
+    m = line.match(/@enduml/);
+    if (m) {
+      return '_offHandler';
     }
     return undefined;
   }

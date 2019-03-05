@@ -3,12 +3,15 @@ const program = require('commander');
 // application modules
 const Puml = require('./');
 
-program
-  .version('0.1.0')
-  .option('-i, --input [file]', 'input .puml file')
-  .option('-l, --lang [lang]', 'select output code language', /^(es6|py2)$/i, 'es6')
-  .option('-o, --out [path]', 'Output path', 'console')
-  .parse(process.argv);
+
+const parseArgs = (argv) => {
+  return program
+    .version('0.1.0')
+    .option('-i, --input [file]', 'input .puml file')
+    .option('-l, --lang [lang]', 'select output code language', /^(es6|py2)$/i, 'es6')
+    .option('-o, --out [path]', 'Output path', 'console')
+    .parse(argv);
+};
 
 const fromStdin = () => {
   process.stdin.resume();
@@ -17,28 +20,29 @@ const fromStdin = () => {
 };
 const fromFile = input => Promise.resolve(Puml.fromFile(input));
 
-let source;
-if (process.stdin.isTTY) {
-  if (program.input) {
-    console.log(`Reading file: ${program.input}`); // eslint-disable-line no-console
-    source = fromFile(program.input);
-  } else {
-    console.log('Reading puml from stdin..'); // eslint-disable-line no-console
-    source = fromStdin();
-  }
-} else {
-  console.log('Reading puml from stdin..'); // eslint-disable-line no-console
-  source = fromStdin();
-}
 
-source
-  .then(puml => puml.generate(program.lang))
-  .then((output) => {
-    if (program.out === 'console') {
-      return output.print();
-    }
-    return output.save(program.output);
-  })
-  .then(() => {
-    console.log('Ready.'); // eslint-disable-line no-console
-  });
+const getSource = (args) => {
+  if (args.input) {
+    console.log(`Reading file: ${args.input}`); // eslint-disable-line no-console
+    return fromFile(args.input);
+  }
+  console.log('Reading puml from stdin..'); // eslint-disable-line no-console
+  return fromStdin();
+};
+
+module.exports = (argv = process.argv) => {
+  console.log(argv);
+  const args = parseArgs(argv);
+  return getSource(args)
+      .then(puml => puml.generate(args.lang))
+      .then((output) => {
+        if (args.out === 'console') {
+          return output.print();
+        }
+        return output.save(args.output);
+      })
+      .then(() => {
+        console.log('Ready.'); // eslint-disable-line no-console
+      });
+};
+module.exports.parseArgs = parseArgs;

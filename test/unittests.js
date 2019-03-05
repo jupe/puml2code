@@ -1,5 +1,14 @@
-const { expect } = require('chai');
+// native modules
+const path = require('path');
+// 3rd party modules
+const chai = require('chai');
 const { spy } = require('sinon');
+const chaiAsPromised = require("chai-as-promised");
+
+
+const { expect } = chai;
+chai.use(chaiAsPromised);
+// modules under test
 const Puml = require('../src');
 
 
@@ -9,6 +18,19 @@ describe('pumlgen', () => {
     expect(puml).is.ok;
     expect(Puml.fromFile).to.be.an('function');
     expect(Puml.fromString).to.be.an('function');
+  });
+  it('SM', () => {
+    const puml = new Puml();
+    spy(puml, '_setState');
+    expect(puml._state).to.be.equal('_offHandler');
+    puml._onLine('@startuml');
+    expect(puml._state).to.be.equal('_idleHandler');
+    puml._onLine('class a {');
+    expect(puml._state).to.be.equal('_classHandler');
+    puml._onLine('}');
+    expect(puml._state).to.be.equal('_idleHandler');
+    puml._onLine('@enduml');
+    expect(puml._state).to.be.equal('_offHandler');
   });
   describe('handlers', () => {
     let puml;
@@ -32,6 +54,7 @@ describe('pumlgen', () => {
 
       expect(puml._idleHandler('title mytitle')).to.be.undefined;
       expect(puml._setTitle.calledOnceWith('mytitle')).to.be.true;
+      expect(puml.title).to.be.equal('mytitle');
     });
     describe('_classHandler', () => {
       beforeEach(() => {
@@ -198,6 +221,40 @@ describe('pumlgen', () => {
           ]);
         });
       });
+    });
+  });
+  describe('_toCode', () => {
+    let puml;
+    beforeEach(() => {
+      puml = new Puml();
+    });
+    it('unknown', () => {
+      expect(() => puml._toCode({}, 'unknown')).to.throw(TypeError);
+    });
+  });
+
+  describe('from', () => {
+    it('String with invalid parameter', () => {
+      expect(() => Puml.fromString({})).to.throw();
+    });
+    it('String', async () => {
+      const puml = Puml.fromString('@startuml\nclass Hep {\n}\n@enduml\n');
+      const output = await puml.generate('es6');
+      expect(output).to.be.ok;
+      const log = spy();
+      output.print(log);
+      expect(log.calledTwice).to.be.true;
+    });
+    it('File', async () => {
+      const puml = Puml.fromFile(path.join(__dirname, './data/simple.puml'));
+      const output = await puml.generate('es6');
+      expect(output).to.be.ok;
+      const log = spy();
+      output.print(log);
+      expect(log.calledTwice).to.be.true;
+    });
+    it('File not found', () => {
+      expect(() => Puml.fromFile('not-exists.puml')).to.be.throw;
     });
   });
 });
