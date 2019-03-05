@@ -62,9 +62,9 @@ defaults: &defaults
         path: junit
     - store_artifacts:
         path: junit
-    #- store_artifacts:
-    #    path: coverage
-    #    prefix: coverage
+    - store_artifacts:
+        path: coverage
+        prefix: coverage
 jobs:
   test-node8:
     <<: *defaults
