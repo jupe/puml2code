@@ -6,6 +6,6 @@ class Scheduler {
     -test(Queue)
     #async protected(Queue)
     -Queue _queue
-    -Resources _resoures
+    -Resources _resoures: list of resources
 }
 @enduml

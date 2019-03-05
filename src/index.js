@@ -82,6 +82,8 @@ class PlantUmlCodeGenerator {
     _toCode(cls) {
          const template = this._readTemplates();
 
+         Handlebars.registerHelper('raw', options => options.fn());
+
          // generate getters
          _.each(cls.methods, (method) => {
              Object.defineProperty(method, "parametersCamelCase", {
@@ -128,80 +130,101 @@ class PlantUmlCodeGenerator {
             return '_idleHandler';
         }
     }
-
     _idleHandler(line) {
         let m = line.match(/class ([\S]+)[\s]+?\{?/);
         if (m) {
             const className = m[1];
             this.logger.debug(`New class: ${className}`);
-            this._classes[className] = {
-                name: className,
-                methods: {
-                },
-                variables: {
-                }
-            };
-            this._currentClass = this._classes[className];
+            this._addClass(className);
             return '_classHandler';
         }
         m = line.match(/title\s+([\S\s]+)/);
         if (m) {
-            this._title = m[1];
+            this._setTitle(m[1]);
         }
     }
+
     _classHandler(line) {
          let m = line.match(/^([\s]+)?\}/);
          if (m) {
-             this._currentClass = undefined;
-             return '_idleHandler';
+             return this._outOfClass();
          }
-
-         const privacyMap = {
-             '-': '_',
-             '#': '__',
-             '+': '',
-             'async': 'async'
-         };
 
          // detect class methods
          // +constructor(queue, resources)
          m = line.match(/([+#-])(async)?([\S]+(?=\s))?[\s]*([\S]+(?=\())\((.*)\)/);
          if (m) {
              let [,privacyKey, asyncronous, type, name, parameters] = m;
-             parameters = parameters ? parameters.split(', ') : [];
-             parameters = _.reduce(parameters, (acc, param) => {
-                 acc.push({
-                     name: param,
-                     camelCase: camelCase(param)
-                 });
-                 return acc;
-             }, []);
-             const privacy = privacyMap[privacyKey];
+             parameters = this._parseParameters(parameters);
+             const privacy = PlantUmlCodeGenerator.PrivacyMap[privacyKey];
              this.logger.debug(`[${this._currentClass.name}].method:`, privacy, asyncronous, type, name, parameters);
-             this._currentClass.methods[name] = {
-                 name,
-                 isNotConstructor: name !== 'constructor',
-                 privacy,
-                 asyncronous,
-                 parameters,
-                 type
-             };
-             return;
+             return this._addMethod(name, privacy, asyncronous, parameters, type);
          }
          // detect class variables
          // #Queue _queue
          m = line.match(/([+#-])?(([\S]+)([\s]+))?([\S]+)/);
          if (m) {
-             const [,privacyKey,, type,, name] = m;
-             const privacy = privacyMap[privacyKey];
+             const [,privacyKey,, type,, name, notes] = m;
+             const privacy = PlantUmlCodeGenerator.PrivacyMap[privacyKey];
              this.logger.debug(`[${this._currentClass.name}].var:`, privacy, type, name);
-             this._currentClass.variables[name] = {
-                 name,
-                 type,
-                 privacy
-             };
-             return;
+             return this._addVariable(name, type, privacy, notes);
          }
+    }
+
+    // Helpers
+
+    _setTitle(title) {
+        this._title = title;
+    }
+
+    static get PrivacyMap() {
+        return {
+             '-': '_',
+             '#': '__',
+             '+': ''
+         };
+    }
+    _parseParameters(str) {
+        const parameters = str ? str.split(', ') : [];
+        return _.reduce(parameters, (acc, param) => {
+             acc.push({
+                 name: param,
+                 get camelCase() { return camelCase(param); },
+                 get notes() { return 'TBD'; }
+             });
+             return acc;
+         }, []);
+    }
+    _addClass(className) {
+        this._classes[className] = {
+            name: className,
+            methods: {},
+            variables: {}
+        };
+        this._currentClass = this._classes[className];
+    }
+    _outOfClass() {
+        this._currentClass = undefined;
+        return '_idleHandler';
+    }
+    _addMethod(name, privacy, asyncronous, parameters, type, notes) {
+        this._currentClass.methods[name] = {
+            name,
+            isNotConstructor: name !== 'constructor',
+            privacy,
+            asyncronous,
+            parameters,
+            type,
+            notes
+        };
+    }
+    _addVariable(name, type, privacy, notes) {
+        this._currentClass.variables[name] = {
+            name,
+            type,
+            privacy,
+            notes
+        };
     }
 }
 

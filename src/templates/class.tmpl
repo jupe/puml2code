@@ -12,7 +12,7 @@ class {{name}} {
     {{#if methods.constructor}}
     /**
      * {{name}} constructor{{#each methods.constructor.parameters}}
-     * @param {{name}} {{camelCase}} TBD{{/each}}
+     * @param {{{{raw}}}}{ {{{{/raw}}}}{{name}} {{{{raw}}}}}{{{{/raw}}}} {{camelCase}} {{notes}}{{/each}}
      */
     constructor({{methods.constructor.parametersCamelCaseJoined}}) {
         {{#each variables}}
@@ -22,8 +22,7 @@ class {{name}} {
 {{#each methods}}{{#if isNotConstructor}}
     /**
      * Function {{privacy}}{{name}}
-{{#each parametersCamelCase}}     * @param {{this}} {{this}}
-{{/each}}
+{{#each parameters}}     * @param {{{{raw}}}}{ {{{{/raw}}}}{{name}} {{{{raw}}}}}{{{{/raw}}}} {{camelCase}} {{notes}}{{/each}}
      */
     {{#if asyncronous}}{{asyncronous}} {{/if}}{{privacy}}{{name}}({{parametersCamelCaseJoined}}) {
         // TBD
