@@ -28,16 +28,19 @@
   },
   "homepage": "https://github.com/jupe/pumlgen#readme",
   "dependencies": {
+    "bluebird": "^3.5.3",
     "camelcase": "^5.0.0",
-    "chai": "^4.2.0",
     "handlebars": "^4.1.0",
-    "istanbul": "^0.4.5",
-    "lodash": "^4.17.11",
-    "mocha-circleci-reporter": "0.0.3"
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^5.15.1",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0"
+    "eslint-plugin-chai-expect": "^2.0.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-mocha": "^5.3.0",
+    "istanbul": "^0.4.5",
+    "mocha-circleci-reporter": "0.0.3"
   }
 }

@@ -1,6 +1,8 @@
+const { join } = require('path');
 const { createInterface } = require('readline');
-const { createReadStream, readFileSync } = require('fs');
+const { createReadStream, readFileSync, writeFile } = require('fs');
 // 3rd party modules
+const Promise = require('bluebird');
 const Handlebars = require('handlebars');
 const _ = require('lodash');
 const camelCase = require('camelcase');
@@ -22,8 +24,9 @@ class Output {
     });
   }
 
-  save(path) {
-
+  async save(path) {
+    const pendings = _.map(this._files, (content, file) => Promise.fromCallback(cb => writeFile(join(path, file), content, cb)));
+    return Promise.all(pendings);
   }
 }
 
@@ -75,7 +78,9 @@ class PlantUmlCodeGenerator {
   }
 
   _readTemplates() {
-    const source = readFileSync('./src/templates/class.tmpl').toString();
+    const tmpl = './src/templates/class.tmpl';
+    this.logger.silly(`Read template: ${tmpl}`);
+    const source = readFileSync(tmpl).toString();
     return Handlebars.compile(source);
   }
 
@@ -105,7 +110,7 @@ class PlantUmlCodeGenerator {
       });
     });
     // figure out dependencies
-    cls.imports = _.reduce(cls.methods, (acc, cls, name) => {
+    cls.imports = _.reduce(cls.methods, (acc, cls) => {
       const tmp = _.reduce(cls.parameters, (cAcc, module) => {
         if (module.name[0] === module.name[0].toUpperCase()) {
           cAcc.push({ module: module.name });
@@ -139,8 +144,10 @@ class PlantUmlCodeGenerator {
 
   _offHandler(line) {
     if (line.match(/@startuml/)) {
+      this.logger.silly('end of startuml');
       return '_idleHandler';
     }
+    return undefined;
   }
 
   _idleHandler(line) {
@@ -153,12 +160,13 @@ class PlantUmlCodeGenerator {
     }
     m = line.match(/title\s+([\S\s]+)/);
     if (m) {
-      this._setTitle(m[1]);
+      return this._setTitle(m[1]);
     }
+    return undefined;
   }
 
   _classHandler(line) {
-    let m = line.match(/^([\s]+)?\}/);
+    let m = line.match(/^([\s]+)?}/);
     if (m) {
       return this._outOfClass();
     }
@@ -167,8 +175,8 @@ class PlantUmlCodeGenerator {
     // +constructor(queue, resources)
     m = line.match(/([+#-])(async)?([\S]+(?=\s))?[\s]*([\S]+(?=\())\((.*)\)/);
     if (m) {
-      let [, privacyKey, asyncronous, type, name, parameters] = m;
-      parameters = this._parseParameters(parameters);
+      const [, privacyKey, asyncronous, type, name, paramStr] = m;
+      const parameters = PlantUmlCodeGenerator._parseParameters(paramStr);
       const privacy = PlantUmlCodeGenerator.PrivacyMap[privacyKey];
       this.logger.debug(`[${this._currentClass.name}].method:`, privacy, asyncronous, type, name, parameters);
       return this._addMethod(name, privacy, asyncronous, parameters, type);
@@ -182,6 +190,7 @@ class PlantUmlCodeGenerator {
       this.logger.debug(`[${this._currentClass.name}].var:`, privacy, type, name);
       return this._addVariable(name, type, privacy, notes);
     }
+    return undefined;
   }
 
   // Helpers
@@ -198,7 +207,7 @@ class PlantUmlCodeGenerator {
     };
   }
 
-  _parseParameters(str) {
+  static _parseParameters(str) {
     const parameters = str ? str.split(', ') : [];
     return _.reduce(parameters, (acc, param) => {
       acc.push({
