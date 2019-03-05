@@ -4,7 +4,9 @@
   "description": "PlantUML to code generator",
   "main": "index.js",
   "scripts": {
-    "test": "MOCHA_FILE=junit/test-results.xml istanbul cover -- _mocha --recursive -R mocha-circleci-reporter"
+    "test": "MOCHA_FILE=junit/test-results.xml istanbul cover -- _mocha --recursive -R mocha-circleci-reporter",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -29,7 +31,13 @@
     "camelcase": "^5.0.0",
     "chai": "^4.2.0",
     "handlebars": "^4.1.0",
+    "istanbul": "^0.4.5",
     "lodash": "^4.17.11",
     "mocha-circleci-reporter": "0.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
   }
 }
