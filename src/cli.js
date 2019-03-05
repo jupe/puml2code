@@ -6,7 +6,7 @@ const Puml = require('./');
 program
   .version('0.1.0')
   .option('-i, --input [file]', 'input .puml file')
-  .option('-l, --lang [lang]', 'select output code language', /^(es6|c)$/i, 'es6')
+  .option('-l, --lang [lang]', 'select output code language', /^(es6|py2)$/i, 'es6')
   .option('-o, --out [path]', 'Output path', 'console')
   .parse(process.argv);
 

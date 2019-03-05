@@ -1,0 +1,29 @@
+#
+{{#each imports}}
+import {{module}}
+{{/each}}
+
+"""
+Class {{name}}
+"""
+class {{name}}(object):
+    {{#if methods.constructor}}
+    """
+    {{name}} constructor{{#each methods.constructor.parameters}}
+    @param {{camelCase}} {{notes}}{{/each}}
+    @return {{name}} instance
+    """
+    def __init__(self, {{methods.constructor.parametersCamelCaseJoined}}):
+        {{#each variables}}
+        this.{{privacy}}{{name}} = {{name}};
+        {{/each}}
+    {{/if}}
+{{#each methods}}{{#if isNotConstructor}}
+    """
+    Function {{privacy}}{{name}}
+{{#each parameters}}    @param {{camelCase}} {{notes}}{{/each}}
+    @return None
+    """
+    def {{privacy}}{{name}}(self, {{parametersCamelCaseJoined}}) {
+        pass
+    {{/if}}{{/each}}
