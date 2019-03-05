@@ -115,7 +115,14 @@ class PlantUmlToCode {
 
   async _readLines(lineReader) {
     lineReader.on('line', this._onLine.bind(this));
-    return new Promise(resolve => lineReader.on('close', resolve));
+    let resolve = () => {};
+    const pending = new Promise((_resolve) => {
+      resolve = _resolve;
+    });
+    process.once('SIGINT', resolve);
+    process.once('SIGTERM', resolve);
+    lineReader.on('close', resolve);
+    return pending;
   }
 
   _onLine(line) {

@@ -13,8 +13,8 @@ class Output {
 
   print() {
     _.each(this._files, (content, file) => {
-      this.logger.debug(`${file}:`);
-      this.logger.debug(`${content}\n\n`);
+      console.log(`${file}:`); // eslint-disable-line no-console
+      console.log(`${content}\n`); // eslint-disable-line no-console
     });
   }
 

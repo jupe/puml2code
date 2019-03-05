@@ -3,10 +3,11 @@
 Tool that convert Plantuml -text file that represent UML diagram to code.
 
 ### Project status
-**HEAVILY IN PROGRESS**
+**POC/IN PROGRESS**
 
 - [ ] core implementation
-- [ ] CLI interface
+- [x] CLI interface
+- [x] JS interface
 - [ ] unit tests
 - [ ] e2e tests
 - [ ] documentation
@@ -20,15 +21,24 @@ Tool that convert Plantuml -text file that represent UML diagram to code.
 * methods with parameters
 * code documentation
 
-### Example
+### Usage
+
 ```
-const PlantUmlToCode = require('puml2code');
-const platnuml = PlantUmlToCode.fromFile('./file.puml');
-platnuml.generate()
-    .then((out) => out.print());
+$ Usage: cli [options]
+
+Options:
+  -V, --version       output the version number
+  -i, --input [file]  input .puml file
+  -l, --lang [lang]   select output code language (default: "es6")
+  -o, --out [path]    Output path (default: "console")
+  -h, --help          output usage information
+
 ```
-Output:
+
+e.g.
 ```
+$ puml2code -i myfile.puml
+
 Scheduler.js:
 // native modules
 // 3rd party modules

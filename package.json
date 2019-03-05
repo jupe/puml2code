@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "description": "PlantUML to code generator",
   "main": "index.js",
+  "bin": {
+    "puml2code": "npm run cli"
+  },
   "scripts": {
+    "cli": "node src/cli.js",
     "test": "MOCHA_FILE=junit/test-results.xml istanbul cover -- _mocha --recursive -R mocha-circleci-reporter",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
@@ -30,6 +34,7 @@
   "dependencies": {
     "bluebird": "^3.5.3",
     "camelcase": "^5.0.0",
+    "commander": "^2.19.0",
     "handlebars": "^4.1.0",
     "lodash": "^4.17.11"
   },
