@@ -65,8 +65,6 @@ defaults: &defaults
     #- store_artifacts:
     #    path: coverage
     #    prefix: coverage
-    #- store_test_results:
-    #    path: coverage/coverage.json
 jobs:
   test-node8:
     <<: *defaults

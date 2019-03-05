@@ -1,36 +1,15 @@
-const { join } = require('path');
 const { Readable } = require('stream');
 const { createInterface } = require('readline');
-const { createReadStream, readFileSync, writeFile } = require('fs');
+const { createReadStream, readFileSync } = require('fs');
 // 3rd party modules
 const Promise = require('bluebird');
 const Handlebars = require('handlebars');
 const _ = require('lodash');
 const camelCase = require('camelcase');
+// application modules
+const Output = require('./Output');
+const dummyLogger = require('./logger');
 
-
-const dummyLogger = { debug: console.log, silly: console.log }; // eslint-disable-line no-console
-
-
-class Output {
-  constructor(files, { logger }) {
-    this.logger = logger;
-    this._files = files;
-  }
-
-  print() {
-    _.each(this._files, (content, file) => {
-      this.logger.debug(`${file}:`);
-      this.logger.debug(`${content}\n\n`);
-    });
-  }
-
-  async save(path) {
-    const writer = (content, file) => Promise.fromCallback(cb => writeFile(join(path, file), content, cb));
-    const pendings = _.map(this._files, writer);
-    return Promise.all(pendings);
-  }
-}
 
 class PlantUmlToCode {
   constructor(stream, { logger = dummyLogger } = {}) {
@@ -42,7 +21,9 @@ class PlantUmlToCode {
     this.logger = logger;
   }
 
-  get title() { return this._title; }
+  get title() {
+    return this._title;
+  }
 
   input(stream) {
     this._stream = stream;
