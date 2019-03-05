@@ -1,4 +1,5 @@
 const { join } = require('path');
+const { Readable } = require('stream');
 const { createInterface } = require('readline');
 const { createReadStream, readFileSync, writeFile } = require('fs');
 // 3rd party modules
@@ -8,7 +9,7 @@ const _ = require('lodash');
 const camelCase = require('camelcase');
 
 
-const dummyLogger = { debug: console.log, silly: console.log };
+const dummyLogger = { debug: console.log, silly: console.log }; // eslint-disable-line no-console
 
 
 class Output {
@@ -25,7 +26,8 @@ class Output {
   }
 
   async save(path) {
-    const pendings = _.map(this._files, (content, file) => Promise.fromCallback(cb => writeFile(join(path, file), content, cb)));
+    const writer = (content, file) => Promise.fromCallback(cb => writeFile(join(path, file), content, cb));
+    const pendings = _.map(this._files, writer);
     return Promise.all(pendings);
   }
 }
@@ -33,19 +35,20 @@ class Output {
 class PlantUmlCodeGenerator {
   constructor(stream, { logger = dummyLogger } = {}) {
     this._classes = {};
-    this._currentClass;
+    this._currentClass = undefined;
     this._state = '_offHandler';
     this._title = '';
     this.input(stream);
     this.logger = logger;
   }
 
+  get title() { return this._title; }
+
   input(stream) {
     this._stream = stream;
   }
 
   static fromString(str) {
-    const { Readable } = require('stream');
     const stream = new Readable();
     stream._read = () => {}; // redundant? see update below
     stream.push(str);
@@ -110,15 +113,15 @@ class PlantUmlCodeGenerator {
       });
     });
     // figure out dependencies
-    cls.imports = _.reduce(cls.methods, (acc, cls) => {
-      const tmp = _.reduce(cls.parameters, (cAcc, module) => {
+    _.set(cls, 'imports', _.reduce(cls.methods, (acc, method) => {
+      const tmp = _.reduce(method.parameters, (cAcc, module) => {
         if (module.name[0] === module.name[0].toUpperCase()) {
           cAcc.push({ module: module.name });
         }
         return cAcc;
       }, []);
       return _.merge(acc, tmp);
-    }, []);
+    }, []));
 
     // Render class template with content
     return template(cls);

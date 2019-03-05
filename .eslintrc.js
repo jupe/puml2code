@@ -13,6 +13,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    "no-underscore-dangle": ["off"],
+    "max-len": ["error", {"code": 120, "tabWidth": 4, "ignoreUrls": true}],
+    "no-underscore-dangle": ["off"]
   },
 };
