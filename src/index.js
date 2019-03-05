@@ -30,7 +30,7 @@ class PlantUmlToCode {
   }
 
   static fromString(str) {
-    if(!_.isString(str)) {
+    if (!_.isString(str)) {
       throw new TypeError('str should be an String');
     }
     const stream = new Readable();

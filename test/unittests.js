@@ -3,7 +3,7 @@ const path = require('path');
 // 3rd party modules
 const chai = require('chai');
 const { spy } = require('sinon');
-const chaiAsPromised = require("chai-as-promised");
+const chaiAsPromised = require('chai-as-promised');
 
 
 const { expect } = chai;

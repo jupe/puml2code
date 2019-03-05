@@ -4,14 +4,12 @@ const program = require('commander');
 const Puml = require('./');
 
 
-const parseArgs = (argv) => {
-  return program
-    .version('0.1.0')
-    .option('-i, --input [file]', 'input .puml file')
-    .option('-l, --lang [lang]', 'select output code language', /^(es6|py2)$/i, 'es6')
-    .option('-o, --out [path]', 'Output path', 'console')
-    .parse(argv);
-};
+const parseArgs = argv => program
+  .version('0.1.0')
+  .option('-i, --input [file]', 'input .puml file')
+  .option('-l, --lang [lang]', 'select output code language', /^(es6|py2)$/i, 'es6')
+  .option('-o, --out [path]', 'Output path', 'console')
+  .parse(argv);
 
 const fromStdin = () => {
   process.stdin.resume();
@@ -31,18 +29,17 @@ const getSource = (args) => {
 };
 
 module.exports = (argv = process.argv) => {
-  console.log(argv);
   const args = parseArgs(argv);
   return getSource(args)
-      .then(puml => puml.generate(args.lang))
-      .then((output) => {
-        if (args.out === 'console') {
-          return output.print();
-        }
-        return output.save(args.output);
-      })
-      .then(() => {
-        console.log('Ready.'); // eslint-disable-line no-console
-      });
+    .then(puml => puml.generate(args.lang))
+    .then((output) => {
+      if (args.out === 'console') {
+        return output.print();
+      }
+      return output.save(args.output);
+    })
+    .then(() => {
+      console.log('Ready.'); // eslint-disable-line no-console
+    });
 };
 module.exports.parseArgs = parseArgs;
