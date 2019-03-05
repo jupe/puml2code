@@ -79,10 +79,11 @@ class PlantUmlToCode {
     try {
       const template = this._readTemplates(lang);
       return this._toClassCode(cls, template);
-    } catch(error)  {
+    } catch (error) {
       throw new Error(`Language ${lang} is not supported`);
     }
   }
+
   _toClassCode(cls, template) {
     this.logger.debug('Generate ES6 code');
     Handlebars.registerHelper('raw', options => options.fn());
