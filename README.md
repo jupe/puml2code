@@ -7,16 +7,6 @@
 
 Tool that convert Plantuml -text file that represent class UML diagram to source code.
 
-### Project status
-**POC/IN PROGRESS**
-
-- [x] core implementation
-- [x] CLI interface
-- [x] JS interface
-- [x] ES6 output
-- [ ] unit tests
-- [ ] e2e tests
-- [ ] documentation
 
 ### Installation
 
@@ -26,11 +16,13 @@ $ npm i -g puml2code
 
 ### Supported features
 * output: file per class/console
-* target language: es6 with code documentation
+* target languages: es6, py2
+  * code documentation
   * imports based on parameter
   * camelCase conversion
   * private variables (with underscore prefix)
   * methods with parameters
+* template engine: [handlebars](http://handlebarsjs.com)
 
 ### Usage
 
