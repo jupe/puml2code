@@ -46,7 +46,7 @@ describe('cli', () => {
       it(`${lang}`, async () => {
         let stdout = '';
         const input = './test/data/car.puml';
-        const printer = (data) => { stdout += data + '\n'; };
+        const printer = (data) => { stdout += `${data}\n`; };
         const shoulFile = `./test/data/car.${lang}.${getExtension(lang)}`;
         const retcode = await cli(['node', 'puml2code', '-l', lang, '-i', input], printer);
         expect(stdout).to.be.equal(readFileSync(shoulFile).toString());
