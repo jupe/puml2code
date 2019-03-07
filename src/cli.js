@@ -30,26 +30,26 @@ const getSource = (args) => {
   return fromStdin();
 };
 
-module.exports = (argv = process.argv) => {
-  const args = parseArgs(argv);
-  return getSource(args)
-    .then(puml => puml.generate(args.lang))
-    .then((output) => {
-      if (args.out === 'console') {
-        return output.print();
-      }
-      return output.save(args.output);
-    })
-    .then(() => {
-      console.log('Ready.'); // eslint-disable-line no-console
-    })
-    .catch(error => {
-      logger.error(error);
-      process.exit(1);
-    });
+const execute = async (argv = process.argv, printer = console.log) => {
+  try {
+    const args = parseArgs(argv);
+    const puml = await getSource(args);
+    const output = await puml.generate(args.lang);
+    if (args.out === 'console') {
+      output.print(printer);
+    } else {
+      await output.save(args.output);
+    }
+    logger.debug('ready'); // eslint-disable-line no-console
+    return 0;
+  } catch (error) {
+    logger.error(error);
+    return 1;
+  }
 };
+module.exports = execute;
 module.exports.parseArgs = parseArgs;
 
 if (require.main === module) {
-  module.exports();
+  execute();
 }

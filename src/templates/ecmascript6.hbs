@@ -1,10 +1,12 @@
 {{#if getNativeModules}}// native modules
 {{#each getNativeModules}}const {{getName}} = require('{{getName}}');{{/each}}
 {{/if}}{{#if get3rdPartyModules}}// 3rd party modules
-{{#each get3rdPartyModules}}const {{getName}} = require('{{getName}}');{{/each}}
+{{#each get3rdPartyModules}}const {{this}} = require('{{this}}');
+{{/each}}
 {{/if}}{{#if getAppModules}}// application modules
 {{#each getAppModules}}const {{getName}} = require('{{getName}}');{{/each}}
 {{/if}}
+
 /**
  * Class {{getFullName}}{{#if getNote}}
  * {{getNote}}{{/if}}
@@ -22,16 +24,18 @@ class {{getFullName}}{{#if getExtends}} extends {{#with getExtends}}{{getFullNam
 {{/each}}
   }{{#each getMethods}}{{#if isNotConstructor}}
 
-  /** {{#if getNote}}
+  /**{{#if getNote}}
    * {{getNote}}{{/if}}{{#each getParameters}}
    * @param { {{getReturnType}} } {{getName}} TBD{{/each}}{{#if isPrivate}}
    * @private{{/if}}
    */
   {{#if isAsync}}async {{/if}}{{getName}}({{#if getParameters}}{{#each getParameters}}{{#if @first}}{{else}}, {{/if}}{{#if getName}}{{getName}}{{else}}param{{@index}}{{/if}}{{/each}}{{/if}}) {
   {{#if this.needsReturnStatement}}
-    return {{getReturnType}}
+    return {{getReturnType}};
   {{else}}
     // TBD
   {{/if}}
   }{{/if}}{{/each}}
 }
+
+module.exports = {{getFullName}};

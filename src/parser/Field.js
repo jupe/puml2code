@@ -25,5 +25,8 @@ class Field {
   isNotConstructor() {
     return ['constructor', '__init__'].indexOf(this.getName()) === -1;
   }
+  getParameters() {
+    return [];
+  }
 }
 module.exports = Field;

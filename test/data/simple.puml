@@ -1,5 +1,8 @@
 @startuml
 class Hep {
-    +test()
+    +test(A a, B b)
+    +Query find(A a)
 }
+EventEmitter -left-|> Hep
+
 @enduml

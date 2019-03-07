@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Field = require('./Field');
 const Method = require('./Method');
 
@@ -10,19 +11,34 @@ class Class {
     this.nNamespace = null;
   }
 
-  getNativeModules() { // eslint-disable-line class-methods-use-this
-    return [];
-  }
-
-  get3rdPartyModules() { // eslint-disable-line class-methods-use-this
-    const types = this.members
+  _getDependencies() {
+      const returnTypes = this.members
         .map(member => member.getReturnType())
         .filter(type => ['void', 'async'].indexOf(type)===-1);
-    return types;
+    const parameterTypes = _.uniq(this.members
+        .reduce((acc, member) => [...acc, ...member.getParameters()], [])
+        .map(params => params.getReturnType()));
+    const all = [...returnTypes, ...parameterTypes];
+    return _.uniq(all);
+  }
+
+  getNativeModules() { // eslint-disable-line class-methods-use-this
+    const isValid = dep => ['EventEmitter'].indexOf(dep)!==-1;
+    return _.filter(this._getDependencies(), isValid)
+  }
+
+  get3rdPartyModules() {
+    // figure out 3rd party dependencies
+    const native = this.getNativeModules();
+    const isValid = dep => native.indexOf(dep)===-1;
+    return _.filter(this._getDependencies(), isValid)
   }
 
   getAppModules() { // eslint-disable-line class-methods-use-this
-    return [];
+    const native = this.getNativeModules();
+    const extDep = this.get3rdPartyModules();
+    const exluded = [...native, ...extDep];
+    return _.without(this._getDependencies(), ...exluded);
   }
 
   getNote() {
