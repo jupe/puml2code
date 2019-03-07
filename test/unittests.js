@@ -40,7 +40,7 @@ describe('pumlgen', () => {
       expect(output).to.be.ok;
       const log = spy();
       output.print(log);
-      expect(log.calledTwice).to.be.true;
+      expect(log.calledOnce).to.be.true;
     });
     it('File', async () => {
       const puml = Puml.fromFile(path.join(__dirname, './data/simple.puml'));
@@ -48,7 +48,7 @@ describe('pumlgen', () => {
       expect(output).to.be.ok;
       const log = spy();
       output.print(log);
-      expect(log.calledTwice).to.be.true;
+      expect(log.calledOnce).to.be.true;
     });
     it('File not found', () => {
       expect(() => Puml.fromFile('not-exists.puml')).to.be.throw;

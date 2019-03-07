@@ -14,7 +14,7 @@ class Output {
 
   print(printer = console.log) { // eslint-disable-line no-console
     _.each(this._files, (content, file) => {
-      printer(`${file}:`);
+      this.logger.info(`${file}:`);
       printer(`${content}`);
     });
   }
