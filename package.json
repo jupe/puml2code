@@ -11,7 +11,7 @@
     "test": "MOCHA_FILE=junit/test-results.xml istanbul cover -- _mocha --recursive -R mocha-circleci-reporter",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "install": "node node_modules/pegjs/bin/pegjs src/parser/plantuml.pegjs src/parser/plantuml.js"
+    "install": "node node_modules/pegjs/bin/pegjs src/parser/plantuml.pegjs"
   },
   "engines": {
     "node": ">=8.0.0"
