@@ -60,3 +60,4 @@ typings/
 browser-test.js
 .idea
 junit
+plantuml.js

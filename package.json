@@ -10,7 +10,8 @@
     "cli": "node src/cli.js",
     "test": "MOCHA_FILE=junit/test-results.xml istanbul cover -- _mocha --recursive -R mocha-circleci-reporter",
     "lint": "eslint .",
-    "lint-fix": "eslint . --fix"
+    "lint-fix": "eslint . --fix",
+    "install": "node node_modules/pegjs/bin/pegjs src/parser/plantuml.pegjs src/parser/plantuml.js"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -39,7 +40,8 @@
     "camelcase": "^5.0.0",
     "commander": "^2.19.0",
     "handlebars": "^4.1.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "pegjs": "^0.10.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",

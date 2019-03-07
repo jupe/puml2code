@@ -11,10 +11,14 @@ class Output {
     this._files = files;
   }
 
-  print(log = console.log) { // eslint-disable-line no-console
+  static get printer() {
+    return console.log ;// eslint-disable-line no-console
+  }
+
+  print(log = Output.printer) {
     _.each(this._files, (content, file) => {
       log(`${file}:`);
-      log(`${content}\n`);
+      log(`${content}`);
     });
   }
 

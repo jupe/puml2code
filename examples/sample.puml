@@ -2,10 +2,12 @@
 title Allocation queue - Class Diagram
 
 class Scheduler {
-    +constructor(Queue, Resources)
-    -test(Queue)
-    #async protected(Queue): list of resources
-    -Queue _queue: queueue object
+    +constructor(Queue queue, Resource resource)
+    -privFunc(Queue q)
+    -async privAsyncFunc(Queue queue)
+    -Queue _queue
     -Resources _resoures
 }
+
+EventEmitter -left-|> Scheduler
 @enduml
