@@ -15,14 +15,14 @@ $ npm i -g puml2code
 ```
 
 ### Supported output languages
-* [CoffeeScript](test/data/coffeescript.coffee) (coffeescript)
-* [C#](test/data/csharp.cs) (csharp)
-* [ECMAScript5](test/data/ecmascript5.js) (javascript)
-* [ECMAScript6](test/data/ecmascript6.js) (javascript2.0) [default]
-* [Java](test/data/java.java) (java)
-* [PHP](test/data/php.php) (php)
-* [Ruby](test/data/ruby.rb) (ruby)
-* [TypeScript](test/data/typescript.ts) (typescript)
+* [CoffeeScript](test/data/car.coffeescript.coffee) (coffeescript)
+* [C#](test/data/car.csharp.cs) (csharp)
+* [ECMAScript5](test/data/car.ecmascript5.js) (javascript)
+* [ECMAScript6](test/data/car.ecmascript6.js) (javascript2.0) [default]
+* [Java](test/data/car.java.java) (java)
+* [PHP](test/data/car.php.php) (php)
+* [Ruby](test/data/car.ruby.rb) (ruby)
+* [TypeScript](test/data/car.typescript.ts) (typescript)
 
 ### Supported features
 * output: file per class/console
