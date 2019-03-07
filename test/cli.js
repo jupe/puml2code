@@ -1,11 +1,10 @@
 // native modules
-const {readFileSync} = require('fs');
+const { readFileSync } = require('fs');
 // 3rd party modules
 const chai = require('chai');
 const { stub } = require('sinon');
 const chaiAsPromised = require('chai-as-promised');
 // module under test
-const Output = require('../src/Output');
 const cli = require('../src/cli');
 
 const { expect } = chai;
@@ -13,7 +12,7 @@ chai.use(chaiAsPromised);
 
 
 describe('cli', () => {
-  let exit, outputPrinter;
+  let exit;
   beforeEach(() => {
     exit = stub(process, 'exit');
   });

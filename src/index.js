@@ -43,12 +43,12 @@ class PlantUmlToCode {
   async generate(lang = 'ecmascript6') {
     this.logger.silly('Reading puml data');
     try {
-        const str = await PlantUmlToCode._readStream(this._stream);
-        const files = await this._toCode(str, lang);
-        return new Output(files, {logger: this.logger});
+      const str = await PlantUmlToCode._readStream(this._stream);
+      const files = await this._toCode(str, lang);
+      return new Output(files, { logger: this.logger });
     } catch (error) {
-        this.logger.error(error);
-        throw error;
+      this.logger.error(error);
+      throw error;
     }
   }
 

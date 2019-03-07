@@ -12,26 +12,26 @@ class Class {
   }
 
   _getDependencies() {
-      const returnTypes = this.members
-        .map(member => member.getReturnType())
-        .filter(type => ['void', 'async'].indexOf(type)===-1);
+    const returnTypes = this.members
+      .map(member => member.getReturnType())
+      .filter(type => ['void', 'async'].indexOf(type) === -1);
     const parameterTypes = _.uniq(this.members
-        .reduce((acc, member) => [...acc, ...member.getParameters()], [])
-        .map(params => params.getReturnType()));
+      .reduce((acc, member) => [...acc, ...member.getParameters()], [])
+      .map(params => params.getReturnType()));
     const all = [...returnTypes, ...parameterTypes];
     return _.uniq(all);
   }
 
   getNativeModules() { // eslint-disable-line class-methods-use-this
-    const isValid = dep => ['EventEmitter'].indexOf(dep)!==-1;
-    return _.filter(this._getDependencies(), isValid)
+    const isValid = dep => ['EventEmitter'].indexOf(dep) !== -1;
+    return _.filter(this._getDependencies(), isValid);
   }
 
   get3rdPartyModules() {
     // figure out 3rd party dependencies
     const native = this.getNativeModules();
-    const isValid = dep => native.indexOf(dep)===-1;
-    return _.filter(this._getDependencies(), isValid)
+    const isValid = dep => native.indexOf(dep) === -1;
+    return _.filter(this._getDependencies(), isValid);
   }
 
   getAppModules() { // eslint-disable-line class-methods-use-this

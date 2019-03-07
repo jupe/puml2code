@@ -30,7 +30,7 @@ const getSource = (args) => {
   return fromStdin();
 };
 
-const execute = async (argv = process.argv, printer = console.log) => {
+const execute = async (argv = process.argv, printer = console.log) => { // eslint-disable-line no-console
   try {
     const args = parseArgs(argv);
     const puml = await getSource(args);
@@ -40,9 +40,9 @@ const execute = async (argv = process.argv, printer = console.log) => {
     } else {
       await output.save(args.output);
     }
-    logger.debug('ready'); // eslint-disable-line no-console
+    logger.debug('ready');
     return 0;
-  } catch (error) {
+  } catch (error) {
     logger.error(error);
     return 1;
   }

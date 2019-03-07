@@ -25,7 +25,8 @@ class Field {
   isNotConstructor() {
     return ['constructor', '__init__'].indexOf(this.getName()) === -1;
   }
-  getParameters() {
+
+  getParameters() { // eslint-disable-line class-methods-use-this
     return [];
   }
 }

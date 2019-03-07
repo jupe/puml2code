@@ -12,7 +12,7 @@ class Output {
     this._files = files;
   }
 
-  print(printer = console.log) {
+  print(printer = console.log) { // eslint-disable-line no-console
     _.each(this._files, (content, file) => {
       printer(`${file}:`);
       printer(`${content}`);
