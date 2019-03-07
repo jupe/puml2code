@@ -6,11 +6,9 @@ class {{getFullName}}{{#if getExtends}}({{#with getExtends}}{{getFullName}}{{/wi
         """
         Constructor for {{getFullName}}
         """
-{{#if hasFields}}
-{{#each getFields}}
+{{#if hasFields}}{{#each getFields}}
         self.{{this.getName}} = None
-{{/each}}
-{{else}}
+{{/each}}{{else}}
         pass
 {{/if}}
 {{#each getMethods}}{{#if this.isPrivate}}ouh{{/if}}
