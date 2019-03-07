@@ -5,18 +5,8 @@
 
 ## PlantUML code generator (puml2code)
 
-Tool that convert Plantuml -text file that represent class UML diagram to source code.
-
-### Project status
-**POC/IN PROGRESS**
-
-- [x] core implementation
-- [x] CLI interface
-- [x] JS interface
-- [x] ES6 output
-- [ ] unit tests
-- [ ] e2e tests
-- [ ] documentation
+a command line utility that convert Plantuml -text file that represent class UML diagram to source code.
+puml parser based on [plantuml-code-generator](https://github.com/bafolts/plantuml-code-generator) but is rewritten with es6.
 
 ### Installation
 
@@ -24,13 +14,24 @@ Tool that convert Plantuml -text file that represent class UML diagram to source
 $ npm i -g puml2code
 ```
 
+### Supported output languages
+* [CoffeeScript](test/data/coffeescript.coffee) (coffeescript)
+* [C#](test/data/csharp.cs) (csharp)
+* [ECMAScript5](test/data/ecmascript5.js) (javascript)
+* [ECMAScript6](test/data/ecmascript6.js) (javascript2.0) [default]
+* [Java](test/data/java.java) (java)
+* [PHP](test/data/php.php) (php)
+* [Ruby](test/data/ruby.rb) (ruby)
+* [TypeScript](test/data/typescript.ts) (typescript)
+
 ### Supported features
 * output: file per class/console
-* target language: es6 with code documentation
+* es6 extended with:
+  * code documentation
   * imports based on parameter
-  * camelCase conversion
-  * private variables (with underscore prefix)
   * methods with parameters
+* template engine: [handlebars](http://handlebarsjs.com)
+* puml parser engine: [pegjs](http://pegjs.org)
 
 ### Usage
 
@@ -85,7 +86,7 @@ class Scheduler {
     }
 }
 ```
-[examples](examples/sample.js)
+See more output examples [here](examples)
 
 ### LICENSE:
 [MIT](LICENSE)

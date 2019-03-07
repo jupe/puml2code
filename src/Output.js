@@ -2,6 +2,7 @@
 const { join } = require('path');
 const { writeFile } = require('fs');
 // 3rd party modules
+const Promise = require('bluebird');
 const _ = require('lodash');
 
 
@@ -11,10 +12,10 @@ class Output {
     this._files = files;
   }
 
-  print(log = console.log) { // eslint-disable-line no-console
+  print(printer = console.log) { // eslint-disable-line no-console
     _.each(this._files, (content, file) => {
-      log(`${file}:`);
-      log(`${content}\n`);
+      this.logger.info(`${file}:`);
+      printer(`${content}`);
     });
   }
 

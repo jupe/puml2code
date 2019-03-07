@@ -1,3 +1,5 @@
 **/node_modules
 doc/
 coverage/
+src/parser/plantuml.js
+test/data

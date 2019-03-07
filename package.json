@@ -10,19 +10,21 @@
     "cli": "node src/cli.js",
     "test": "MOCHA_FILE=junit/test-results.xml istanbul cover -- _mocha --recursive -R mocha-circleci-reporter",
     "lint": "eslint .",
-    "lint-fix": "eslint . --fix"
+    "lint-fix": "eslint . --fix",
+    "install": "node node_modules/pegjs/bin/pegjs src/parser/plantuml.pegjs"
   },
   "engines": {
     "node": ">=8.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jupe/puml2ode.git"
+    "url": "git+https://github.com/jupe/puml2code.git"
   },
   "keywords": [
     "plantuml",
     "puml",
     "code",
+    "pegjs",
     "generator",
     "uml",
     "class",
@@ -31,15 +33,16 @@
   "author": "Jussi Vatjus-Anttila",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jupe/puml2ode/issues"
+    "url": "https://github.com/jupe/puml2code/issues"
   },
-  "homepage": "https://github.com/jupe/puml2ode#readme",
+  "homepage": "https://github.com/jupe/puml2code#readme",
   "dependencies": {
     "bluebird": "^3.5.3",
     "camelcase": "^5.0.0",
     "commander": "^2.19.0",
     "handlebars": "^4.1.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "pegjs": "^0.10.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",

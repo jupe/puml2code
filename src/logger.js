@@ -1,6 +1,6 @@
 const nullLogger = new Proxy({}, {
-  get: () => (line) => { // eslint-disable-line no-unused-vars
-    // console.log(line); // eslint-disable-line console-print
+  get: (m, level) => (line) => { // eslint-disable-line no-unused-vars
+    console.log(`[${level}] ${line}`); // eslint-disable-line no-console
   },
 });
 
