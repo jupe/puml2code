@@ -14,6 +14,24 @@ class PlantUmlToCode {
   constructor(stream, { logger = dummyLogger } = {}) {
     this._stream = stream;
     this.logger = logger;
+
+    // Workaround for an apparent bug in Handlebars: functions are not called with the parent scope
+    // as context.
+    //
+    // Here the getFullName is found in the parent scope (Class), but it is called with the current
+    // scope (Field) as context:
+    //
+    // {{#each getFields}}
+    //   {{../getFullName}}
+    // {{/each}}
+    //
+    // The following helper works around it:
+    //
+    // {{#each getFields}}
+    //   {{#call ../this ../getFullName}}
+    // {{/each}}
+
+    Handlebars.registerHelper('call', (context, member) => member.call(context));
   }
 
   static fromString(str) {
@@ -58,6 +76,10 @@ class PlantUmlToCode {
     let source = await Promise.fromCallback(cb => readFile(tmpl, cb));
     source = source.toString();
     return Handlebars.compile(source);
+  }
+
+  static get languages() {
+    return _.keys(PlantUmlToCode.extensions);
   }
 
   static get extensions() {

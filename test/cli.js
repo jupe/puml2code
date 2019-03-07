@@ -6,6 +6,7 @@ const { stub } = require('sinon');
 const chaiAsPromised = require('chai-as-promised');
 // module under test
 const cli = require('../src/cli');
+const { languages, getExtension } = require('../src');
 
 const { expect } = chai;
 chai.use(chaiAsPromised);
@@ -41,12 +42,16 @@ describe('cli', () => {
     expect(process.exit.calledOnceWith(1)).to.be.true;
   });
   describe('input', () => {
-    it('file', async () => {
-      let stdout;
-      const printer = (data) => { stdout = data; };
-      const retcode = await cli(['node', 'puml2code', '-i', './test/data/simple.puml'], printer);
-      expect(stdout).to.be.equal(readFileSync('./test/data/simple.js').toString());
-      expect(retcode).to.be.equal(0);
+    languages.forEach((lang) => {
+      it(`${lang}`, async () => {
+        let stdout = '';
+        const input = './test/data/simple.puml';
+        const printer = (data) => { stdout = data; };
+        const shoulFile = `./test/data/${lang}.${getExtension(lang)}`;
+        const retcode = await cli(['node', 'puml2code', '-l', lang, '-i', input], printer);
+        expect(stdout).to.be.equal(readFileSync(shoulFile).toString());
+        expect(retcode).to.be.equal(0);
+      });
     });
   });
 });

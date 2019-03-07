@@ -5,7 +5,7 @@ const program = require('commander');
 const Puml = require('./');
 const logger = require('./logger');
 
-const options = new RegExp(`^(${_.reduce(Puml.extensions, (acc, ext) => `${acc}${ext}|`, '')})$`, 'i');
+const options = new RegExp(`^(${_.reduce(Puml.languages, (acc, ext) => `${acc}${ext}|`, '')})$`, 'i');
 const parseArgs = argv => program
   .version('0.1.0')
   .option('-i, --input [file]', 'input .puml file')

@@ -13,9 +13,7 @@ class {{getFullName}}{{#if getExtends}}({{#with getExtends}}{{getFullName}}{{/wi
 {{else}}
         pass
 {{/if}}
-
-{{#each getMethods}}
-    {{#if this.isPrivate}}ouh{{/if}}
+{{#each getMethods}}{{#if this.isPrivate}}ouh{{/if}}
     def {{this.getName}}{{#if this.getParameters}}(self, {{#each this.getParameters}}{{#if @first}}{{else}},{{/if}}{{#if this.getName}}{{this.getName}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(self){{/if}}:
         """
         """
@@ -24,5 +22,4 @@ class {{getFullName}}{{#if getExtends}}({{#with getExtends}}{{getFullName}}{{/wi
     {{else}}
         pass
     {{/if}}
-
 {{/each}}

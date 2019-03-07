@@ -19,6 +19,7 @@ module.exports = {
     "no-unused-vars": ["off"],
     "no-useless-constructor": ["off"],
     "class-methods-use-this": ["off"],
-    "no-empty-function": ["off"]
+    "no-empty-function": ["off"],
+    "func-names": ["off"]
   },
 };

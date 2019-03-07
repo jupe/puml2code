@@ -18,12 +18,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jupe/puml2ode.git"
+    "url": "git+https://github.com/jupe/puml2code.git"
   },
   "keywords": [
     "plantuml",
     "puml",
     "code",
+    "pegjs",
     "generator",
     "uml",
     "class",
@@ -32,9 +33,9 @@
   "author": "Jussi Vatjus-Anttila",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jupe/puml2ode/issues"
+    "url": "https://github.com/jupe/puml2code/issues"
   },
-  "homepage": "https://github.com/jupe/puml2ode#readme",
+  "homepage": "https://github.com/jupe/puml2code#readme",
   "dependencies": {
     "bluebird": "^3.5.3",
     "camelcase": "^5.0.0",
