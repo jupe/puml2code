@@ -6,8 +6,9 @@ class Car:
         """
         Constructor for Car
         """
-
-        pass
+        self.model = None
+        self.make = None
+        self.year = None
 
     def setModel(self, model):
         """
@@ -39,6 +40,7 @@ class Car:
         """
         return null
 
+
 """
 @package NamesInThings
 """
@@ -47,15 +49,17 @@ class NamesInThings:
         """
         Constructor for NamesInThings
         """
-
-        pass
+        self.field = None
+        self.field1 = None
+        self._some_private = None
+        self.field_2 = None
 
     def member(self):
         """
         """
         pass
-ouh
-    def member2(self):
+
+    def _member2(self):
         """
         """
         return null
@@ -64,11 +68,12 @@ ouh
         """
         """
         pass
-ouh
-    def member_s(self):
+
+    def _member_s(self):
         """
         """
         return null
+
 
 """
 @package Toyota
@@ -78,6 +83,8 @@ class Toyota(Car):
         """
         Constructor for Toyota
         """
+        pass
+
 
 """
 @package Honda
@@ -87,6 +94,8 @@ class Honda(Car):
         """
         Constructor for Honda
         """
+        pass
+
 
 """
 @package Ford
@@ -96,6 +105,8 @@ class Ford(Car):
         """
         Constructor for Ford
         """
+        pass
+
 
 """
 @package Hyundai
@@ -105,4 +116,6 @@ class Hyundai(Car):
         """
         Constructor for Hyundai
         """
+        pass
+
 

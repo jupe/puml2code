@@ -5,19 +5,21 @@ class {{getFullName}}{{#if getExtends}}({{#with getExtends}}{{getFullName}}{{/wi
     def __init__(self):
         """
         Constructor for {{getFullName}}
-        """
-{{#if hasFields}}{{#each getFields}}
-        self.{{this.getName}} = None
-{{/each}}{{else}}
+        """{{#if hasFields}}{{#each getFields}}
+        self.{{this.getName}} = None{{/each}}
+{{else}}
+
         pass
 {{/if}}
-{{#each getMethods}}{{#if this.isPrivate}}ouh{{/if}}
-    def {{this.getName}}{{#if this.getParameters}}(self, {{#each this.getParameters}}{{#if @first}}{{else}},{{/if}}{{#if this.getName}}{{this.getName}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(self){{/if}}:
+
+{{#each getMethods}}
+    def {{#if this.isPrivate}}_{{/if}}{{this.getName}}{{#if this.getParameters}}(self, {{#each this.getParameters}}{{#if @first}}{{else}},{{/if}}{{#if this.getName}}{{this.getName}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(self){{/if}}:
         """
         """
     {{#if this.needsReturnStatement}}
         return null
-    {{else}}
+{{else}}
         pass
-    {{/if}}
+{{/if}}
+
 {{/each}}

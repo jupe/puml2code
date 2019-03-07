@@ -79,17 +79,12 @@ class Class {
   }
 
   hasMethods() {
-    for (let i = 0, { length } = this.members; i < length; i += 1) {
-      if (this.members[i] instanceof Method) {
-        return true;
-      }
-    }
-    return false;
+    return !!this.getMethods().length;
   }
 
   /**
-   *
-   * @returns {T[]}
+   * get methods
+   * @returns {[Method>]} list of Method's
    * @private
    */
   getMethods() {
@@ -98,17 +93,11 @@ class Class {
   }
 
   hasFields() {
-    const hasFields = !this.members.find(file => (!(file instanceof Method) && (file instanceof Field)));
-    return hasFields;
+    return !!this.getFields().length;
   }
 
   getFields() {
-    const aResult = [];
-    for (let i = 0, { length } = this.members; i < length; i += 1) {
-      if (!(this.members[i] instanceof Method) && this.members[i] instanceof Field) {
-        aResult.push(this.members[i]);
-      }
-    }
+    const aResult = this.members.filter(file => (!(file instanceof Method) && (file instanceof Field)));
     return aResult;
   }
 
