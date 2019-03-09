@@ -1,4 +1,10 @@
-class Car
+class Vehicle
+  def getType
+    return
+  end
+end
+
+class Car < Vehicle
   @model
   @make
   @year

@@ -1,4 +1,10 @@
-abstract class Car {
+class Vehicle {
+  public String getType() {
+      return null;
+  }
+}
+
+abstract class Car extends Vehicle {
   private String model;
   private String make;
   private Number year;

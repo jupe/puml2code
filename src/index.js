@@ -120,7 +120,7 @@ class PlantUmlToCode {
       return files;
     } catch (error) {
       this.logger.error(error);
-      throw new TypeError(`Language ${lang} is not supported`);
+      throw new TypeError(`Conversion error: ${error}`);
     }
   }
 }

@@ -14,6 +14,7 @@ umlline
   / declaration:namespacedeclaration newline { return declaration }
   / declaration:classdeclaration newline { return declaration }
   / declaration:abstractclassdeclaration newline { return declaration }
+  / declaration:interfacedeclaration newline { return declaration }
   / declaration:memberdeclaration newline { return declaration }
   / declaration:connectordeclaration newline { return declaration }
 hideline
@@ -66,6 +67,8 @@ propertyset
 packagedeclaration
   = "package " objectname startblock newline umllines endblock
   / "package " objectname newline umllines "end package"
+interfacedeclaration
+  = noise "interface " noise classname:objectname noise startblock lines:umllines endblock { var InterfaceClass = require("./InterfaceClass"); return new InterfaceClass(classname, lines) }
 abstractclassdeclaration
   = noise "abstract " noise "class "? noise classname:objectname noise startblock lines:umllines endblock { var AbstractClass = require("./AbstractClass"); return new AbstractClass(classname, lines) }
   / noise "abstract " noise "class "? noise classname:objectname noise { var AbstractClass = require("./AbstractClass"); return new AbstractClass(classname) }
@@ -102,8 +105,6 @@ methodparameters
   = items:methodparameter* { return items; }
 methodparameter
   = noise item:returntype membername:([ ] membername)? [,]? { var Parameter = require("./Parameter"); return new Parameter(item, membername ? membername[1] : null); }
-notes
-  = ":"? noise note:[^\n\r]* { var Note = require("./Note"); return new Note(note ? note.join("") : null); }
 returntype
   = items:[^ ,\n\r\t(){}]+ { return items.join("") }
 objectname

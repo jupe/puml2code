@@ -1,4 +1,11 @@
-function Car() {}
+function Vehicle() {}
+Vehicle.prototype.getType = function () {};
+
+function Car() {
+  Vehicle.prototype.constructor.apply(this, arguments);
+}
+Car.prototype = Object.create(Vehicle.prototype);
+Car.prototype.constructor = Car;
 Car.prototype.model = undefined;
 Car.prototype.make = undefined;
 Car.prototype.year = undefined;

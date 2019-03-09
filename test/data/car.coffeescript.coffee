@@ -1,4 +1,7 @@
-class Car
+class Vehicle
+  getType:  ->
+
+class Car extends Vehicle
   model: undefined
   make: undefined
   year: undefined

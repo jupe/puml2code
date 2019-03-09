@@ -5,6 +5,10 @@ hide empty members
 
 ' This is a comment line
 
+interface Vehicle {
+    + String getType()
+}
+
 abstract Car {
   + void setModel(String model)
   + void setMake(String make)
@@ -33,9 +37,10 @@ class Honda
 class Ford
 class Hyundai
 
+Car -up-|> Vehicle
 Toyota -left-|> Car
 Honda -right-|> Car
 Ford -up-|> Car
-Hyundai -down-|> Car
+Hyundai -up-|> Car
 
 @enduml

@@ -2,8 +2,8 @@ const Field = require('./Field');
 
 
 class Method extends Field {
-  constructor(accessType, returnType, fieldName, aParameters, aNotes) {
-    super(accessType, returnType, fieldName, aNotes);
+  constructor(accessType, returnType, fieldName, aParameters) {
+    super(accessType, returnType, fieldName);
     this.aParameters = aParameters;
     this.sReturnType = returnType;
   }
@@ -30,6 +30,10 @@ class Method extends Field {
 
   isAsync() {
     return this.sReturnType === 'async';
+  }
+
+  isLambda() {
+    return this.sFieldName.startsWith('*');
   }
 
   getParameters() {
