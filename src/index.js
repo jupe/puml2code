@@ -9,6 +9,7 @@ const _ = require('lodash');
 const parser = require('./parser');
 const Output = require('./Output');
 const dummyLogger = require('./logger');
+
 const { SyntaxError } = parser;
 
 
@@ -77,10 +78,10 @@ class PlantUmlToCode {
   }
 
   static get templateFiles() {
-       return _.reduce(PlantUmlToCode.languages, (acc,lang) => {
-           acc[lang] = join(__dirname, 'templates', `${lang}.hbs`);
-           return acc;
-       }, {});
+    return _.reduce(PlantUmlToCode.languages, (acc, lang) => {
+      acc[lang] = join(__dirname, 'templates', `${lang}.hbs`);
+      return acc;
+    }, {});
   }
 
   async _readTemplate(lang) {
@@ -120,7 +121,6 @@ class PlantUmlToCode {
    * @private
    */
   async _toCode(data, lang) {
-
     const template = await this._readTemplate(lang);
     const aUMLBlocks = await parser(data);
     const files = {};
