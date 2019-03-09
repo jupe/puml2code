@@ -99,15 +99,16 @@ memberdeclaration
   = declaration:methoddeclaration { return declaration }
   / declaration:fielddeclaration { return declaration }
 fielddeclaration
-  = noise accessortype:accessortype noise returntype:returntype noise membername:membername noise { var Field = require("./Field"); return new Field(accessortype, returntype, membername) }
-  / noise accessortype:accessortype noise membername:membername noise { var Field = require("./Field"); return new Field(accessortype, "void", membername) }
-  / noise returntype:returntype noise membername:membername noise { var Field = require("./Field"); return new Field("+", returntype, membername) }
+  = noise accessortype:accessortype noise abstract:abstract? returntype:returntype noise membername:membername noise { var Field = require("./Field"); return new Field(accessortype, returntype, membername, abstract) }
+  / noise accessortype:accessortype noise abstract:abstract? membername:membername noise { var Field = require("./Field"); return new Field(accessortype, "void", membername, abstract) }
+  / noise returntype:returntype noise abstract:abstract? membername:membername noise { var Field = require("./Field"); return new Field("+", returntype, membername, abstract) }
 methoddeclaration
   = noise field:fielddeclaration [(] parameters:methodparameters [)] noise { var Method = require("./Method"); return new Method(field.getAccessType(), field.getReturnType(), field.getName(), parameters); }
 methodparameters
   = items:methodparameter* { return items; }
 methodparameter
-  = noise item:returntype membername:([ ] membername)? [,]? { var Parameter = require("./Parameter"); return new Parameter(item, membername ? membername[1] : null); }
+  = noise item:returntype membername:([ ] membername)? [=] defaultValue:(membername) [,]? { var Parameter = require("./Parameter"); return new Parameter(item, membername ? membername[1] : null, defaultValue); }
+  / noise item:returntype membername:([ ] membername)? [,]? { var Parameter = require("./Parameter"); return new Parameter(item, membername ? membername[1] : null); }
 returntype
   = items:[^ ,\n\r\t(){}]+ { return items.join("") }
 objectname
@@ -124,3 +125,5 @@ privateaccessor
   = [-]
 protectedaccessor
   = [#]
+abstract
+  = abstract:("{abstract}") noise { return !!abstract; }
