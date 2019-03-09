@@ -1,9 +1,17 @@
 class Field {
-  constructor(accessType, returnType, fieldName, note) {
+  constructor(accessType, returnType, fieldName) {
     this.sAccessType = accessType;
     this.sReturnType = returnType;
     this.sFieldName = fieldName;
-    this.sNote = note;
+    this.bInterface = false;
+  }
+
+  setInterface() {
+    this.bInterface = true;
+  }
+
+  isInterface() {
+    return this.bInterface;
   }
 
   getAccessType() {
@@ -16,10 +24,6 @@ class Field {
 
   getName() {
     return this.sFieldName;
-  }
-
-  getNote() {
-    return this.sNote;
   }
 
   isNotConstructor() {

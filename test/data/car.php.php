@@ -1,5 +1,12 @@
 <?php
-abstract class Car {
+class Vehicle {
+  public function getType() {
+      return null;
+  }
+}
+?>
+<?php
+abstract class Car extends Vehicle {
   private model;
   private make;
   private year;

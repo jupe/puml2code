@@ -1,7 +1,27 @@
+import abc
+"""
+@package Interface Vehicle
+"""
+class Vehicle(abs.ABC):
+    def __init__(self):
+        """
+        Constructor for Vehicle
+        """
+        pass
+
+
+    @abc.abstractmethod
+    def getType(self):
+        """
+        :return: String
+        """
+        return null
+
+
 """
 @package Abstract Car
 """
-class Car:
+class Car(Vehicle):
     def __init__(self):
         """
         Constructor for Car
@@ -12,31 +32,40 @@ class Car:
 
     def setModel(self, model):
         """
+        :param model:
+
         """
         pass
 
     def setMake(self, make):
         """
+        :param make:
+
         """
         pass
 
     def setYear(self, param0):
         """
+        :param :
+
         """
         pass
 
     def getModel(self):
         """
+        :return: String
         """
         return null
 
     def getMake(self):
         """
+        :return: String
         """
         return null
 
     def getYear(self):
         """
+        :return: Number
         """
         return null
 
@@ -44,7 +73,7 @@ class Car:
 """
 @package NamesInThings
 """
-class NamesInThings:
+class NamesInThings():
     def __init__(self):
         """
         Constructor for NamesInThings
@@ -56,21 +85,25 @@ class NamesInThings:
 
     def member(self):
         """
+
         """
         pass
 
     def _member2(self):
         """
+        :return: String1
         """
         return null
 
     def member3(self):
         """
+
         """
         pass
 
     def _member_s(self):
         """
+        :return: String2
         """
         return null
 

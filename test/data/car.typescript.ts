@@ -1,4 +1,9 @@
-class Car {
+class Vehicle {
+  getType() {
+    return;
+  }
+}
+class Car extends Vehicle {
   private model : String;
   private make : String;
   private year : Number;

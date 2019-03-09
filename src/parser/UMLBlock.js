@@ -1,6 +1,7 @@
 const Namespace = require('./Namespace');
 const Class = require('./Class');
 const AbstractClass = require('./AbstractClass');
+const InterfaceClass = require('./InterfaceClass');
 const Connection = require('./Connection');
 const Package = require('./Package');
 const Extension = require('./Extension');
@@ -83,7 +84,7 @@ class UMLBlock {
       if (items[i] instanceof Namespace) {
         this.aNamespaces.push(items[i]);
         this.populateGlobals(items[i]);
-      } else if (items[i] instanceof Class || items[i] instanceof AbstractClass) {
+      } else if (items[i] instanceof Class || items[i] instanceof AbstractClass || items[i] instanceof InterfaceClass) {
         this.aClasses.push(items[i]);
       } else if (items[i] instanceof Package) {
         this.aPackages.push(items[i]);

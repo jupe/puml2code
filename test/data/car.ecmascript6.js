@@ -1,15 +1,40 @@
 // 3rd party modules
 const String = require('String');
+
+/**
+ * Interface Class Vehicle
+ * @interface
+ */
+class Vehicle {
+  /**
+   * Constructor for Vehicle
+   */
+  constructor() {
+  }
+
+  /**
+   * @return { String }
+   */
+  getType() {
+    throw new Error('Not implemented');
+  }
+}
+
+module.exports = Vehicle;
+
+// 3rd party modules
+const String = require('String');
 const Number = require('Number');
 
 /**
  * Class Car
  */
-class Car {
+class Car extends Vehicle {
   /**
    * Constructor for Car
    */
   constructor() {
+    super();
     this.model = undefined;
     this.make = undefined;
     this.year = undefined;
@@ -37,18 +62,21 @@ class Car {
   }
 
   /**
+   * @return { String }
    */
   getModel() {
     return String;
   }
 
   /**
+   * @return { String }
    */
   getMake() {
     return String;
   }
 
   /**
+   * @return { Number }
    */
   getYear() {
     return Number;
@@ -84,6 +112,7 @@ class NamesInThings {
   }
 
   /**
+   * @return { String1 }
    * @private
    */
   member2() {
@@ -97,6 +126,7 @@ class NamesInThings {
   }
 
   /**
+   * @return { String2 }
    * @private
    */
   member_s() {

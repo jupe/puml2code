@@ -8,8 +8,9 @@
 {{/if}}
 
 /**
- * Class {{getFullName}}{{#if getNote}}
- * {{getNote}}{{/if}}
+ * {{#if isInterface}}Interface {{/if}}Class {{getFullName}}{{#if getNote}}
+ * {{getNote}}{{/if}}{{#if isInterface}}
+ * @interface{{/if}}
  */
 class {{getFullName}}{{#if getExtends}} extends {{#with getExtends}}{{getFullName}}{{/with}}{{/if}} {
   /**
@@ -26,16 +27,13 @@ class {{getFullName}}{{#if getExtends}} extends {{#with getExtends}}{{getFullNam
 
   /**{{#if getNote}}
    * {{getNote}}{{/if}}{{#each getParameters}}
-   * @param { {{getReturnType}} } {{getName}} TBD{{/each}}{{#if isPrivate}}
+   * @param { {{getReturnType}} } {{getName}} TBD{{/each}}{{#if needsReturnStatement}}
+   * @return { {{getReturnType}} }{{/if}}{{#if isPrivate}}
    * @private{{/if}}
    */
   {{#if isAsync}}async {{/if}}{{getName}}({{#if getParameters}}{{#each getParameters}}{{#if @first}}{{else}}, {{/if}}{{#if getName}}{{getName}}{{else}}param{{@index}}{{/if}}{{/each}}{{/if}}) {
-  {{#if this.needsReturnStatement}}
-    return {{getReturnType}};
-  {{else}}
-    // TBD
-  {{/if}}
-  }{{/if}}{{/each}}
+    {{#if isInterface}}throw new Error('Not implemented');{{else}}{{#if this.needsReturnStatement}}return {{getReturnType}};{{else}}// TBD{{/if}}{{/if}}{{/if}}
+  }{{/each}}
 }
 
 module.exports = {{getFullName}};

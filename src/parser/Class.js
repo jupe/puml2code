@@ -3,11 +3,10 @@ const Field = require('./Field');
 const Method = require('./Method');
 
 class Class {
-  constructor(className, members, note) {
+  constructor(className, members) {
     this.cExtends = null;
     this.members = members || [];
     this.className = className;
-    this.sNote = note;
     this.nNamespace = null;
   }
 
@@ -41,10 +40,6 @@ class Class {
     return _.without(this._getDependencies(), ...exluded);
   }
 
-  getNote() {
-    return this.sNote;
-  }
-
   setExtends(className) {
     this.cExtends = className;
   }
@@ -62,6 +57,10 @@ class Class {
   }
 
   isAbstract() { // eslint-disable-line class-methods-use-this
+    return false;
+  }
+
+  isInterface() { // eslint-disable-line class-methods-use-this
     return false;
   }
 

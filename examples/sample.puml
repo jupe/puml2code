@@ -1,5 +1,19 @@
 @startuml
+
+header
+DRAFT
+Authors: xxx
+Version: 0.1
+endheader
+
+hide empty members
+
 title Allocation queue - Class Diagram
+
+
+interface Type {
+    +URI getIdentifier()
+}
 
 class Scheduler {
     +constructor(Queue queue, Resources resource)
@@ -9,5 +23,9 @@ class Scheduler {
     -Resources _resoures
 }
 
-EventEmitter -up-|> Scheduler
+
+class EventEmitter
+Scheduler -up-|> EventEmitter
+
+
 @enduml
