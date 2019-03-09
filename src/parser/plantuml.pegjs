@@ -5,6 +5,7 @@ umllines
 umlline
   = propertyset newline { return null }
   / titleset newline { return null }
+  / headerset newline { return null }
   / noise newline { return null }
   / commentline { return null }
   / noteline { return null }
@@ -27,6 +28,8 @@ connectordescription
   = noise ["]([\\]["]/[^"])*["] noise
 titleset
   = noise "title " noise [^\r\n]+ noise
+headerset
+  = "header" (!"endheader" .)* "endheader"
 commentline
   = noise "'" [^\r\n]+ noise
   / noise ".." [^\r\n\.]+ ".." noise

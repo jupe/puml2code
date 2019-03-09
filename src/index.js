@@ -120,7 +120,7 @@ class PlantUmlToCode {
       return files;
     } catch (error) {
       this.logger.error(error);
-      throw new TypeError(`Conversion error: ${error}`);
+      throw error;
     }
   }
 }

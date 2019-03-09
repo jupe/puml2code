@@ -1,5 +1,11 @@
 @startuml
 
+header
+DRAFT
+Authors: xxx
+Version: 0.1
+endheader
+
 hide empty members
 
 title Allocation queue - Class Diagram
@@ -20,4 +26,6 @@ class Scheduler {
 
 class EventEmitter
 Scheduler -up-|> EventEmitter
+
+
 @enduml
