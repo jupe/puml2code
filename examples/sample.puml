@@ -19,7 +19,7 @@ class Scheduler {
     +constructor(Queue queue, Resources resource)
     -{abstract}Type getType()
     -privFunc(Queue q)
-    -async privAsyncFunc(Queue queue=default)
+    -async privAsyncFunc(Queue queue=[])
     -Queue _queue
     -Resources _resoures
 }
