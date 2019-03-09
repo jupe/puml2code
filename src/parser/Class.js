@@ -59,6 +59,7 @@ class Class {
   isAbstract() { // eslint-disable-line class-methods-use-this
     return false;
   }
+
   isInterface() { // eslint-disable-line class-methods-use-this
     return false;
   }
