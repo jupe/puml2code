@@ -1,13 +1,18 @@
 class Field {
-  constructor(accessType, returnType, fieldName) {
+  constructor(accessType, returnType, fieldName, abstract) {
     this.sAccessType = accessType;
     this.sReturnType = returnType;
     this.sFieldName = fieldName;
     this.bInterface = false;
+    this.bAbstract = !!abstract;
   }
 
   setInterface() {
     this.bInterface = true;
+  }
+
+  isAbstract() {
+    return this.bAbstract;
   }
 
   isInterface() {

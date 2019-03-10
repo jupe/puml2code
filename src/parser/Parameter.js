@@ -1,7 +1,12 @@
 class Parameter {
-  constructor(returnType, memberName) {
+  constructor(returnType, memberName, defaultValue) {
     this.sReturnType = returnType;
     this.sParameterName = memberName;
+    this.sDefaultValue = defaultValue;
+  }
+
+  getDefaultValue() {
+    return this.sDefaultValue;
   }
 
   getReturnType() {

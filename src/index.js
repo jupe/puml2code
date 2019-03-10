@@ -1,4 +1,5 @@
 const { Readable } = require('stream');
+const { join } = require('path');
 const { createReadStream, readFile } = require('fs');
 // 3rd party modules
 const Promise = require('bluebird');
@@ -8,6 +9,8 @@ const _ = require('lodash');
 const parser = require('./parser');
 const Output = require('./Output');
 const dummyLogger = require('./logger');
+
+const { SyntaxError } = parser;
 
 
 class PlantUmlToCode {
@@ -65,13 +68,24 @@ class PlantUmlToCode {
       const files = await this._toCode(str, lang);
       return new Output(files, { logger: this.logger });
     } catch (error) {
-      this.logger.error(error);
+      if (error instanceof SyntaxError) {
+        this.logger.error(`line: ${error.location.start.line} column: ${error.location.start.column}: ${error}`);
+      } else {
+        this.logger.error(error);
+      }
       throw error;
     }
   }
 
+  static get templateFiles() {
+    return _.reduce(PlantUmlToCode.languages, (acc, lang) => {
+      acc[lang] = join(__dirname, 'templates', `${lang}.hbs`);
+      return acc;
+    }, {});
+  }
+
   async _readTemplate(lang) {
-    const tmpl = `./src/templates/${lang}.hbs`;
+    const tmpl = PlantUmlToCode.templateFiles[lang];
     this.logger.silly(`Read template: ${tmpl}`);
     let source = await Promise.fromCallback(cb => readFile(tmpl, cb));
     source = source.toString();
@@ -107,21 +121,16 @@ class PlantUmlToCode {
    * @private
    */
   async _toCode(data, lang) {
-    try {
-      const template = await this._readTemplate(lang);
-      const aUMLBlocks = await parser(data);
-      const files = {};
-      const extension = PlantUmlToCode.getExtension(lang);
-      aUMLBlocks.forEach((project) => {
-        project.getClasses().forEach((element) => {
-          files[`${element.getFullName()}.${extension}`] = template(element);
-        });
+    const template = await this._readTemplate(lang);
+    const aUMLBlocks = await parser(data);
+    const files = {};
+    const extension = PlantUmlToCode.getExtension(lang);
+    aUMLBlocks.forEach((project) => {
+      project.getClasses().forEach((element) => {
+        files[`${element.getFullName()}.${extension}`] = template(element);
       });
-      return files;
-    } catch (error) {
-      this.logger.error(error);
-      throw error;
-    }
+    });
+    return files;
   }
 }
 

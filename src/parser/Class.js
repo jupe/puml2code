@@ -11,29 +11,39 @@ class Class {
   }
 
   _getDependencies() {
-    const returnTypes = this.members
-      .map(member => member.getReturnType())
-      .filter(type => ['void', 'async'].indexOf(type) === -1);
-    const parameterTypes = _.uniq(this.members
+    const returnTypes = this.members.map(member => member.getReturnType());
+    const parameterTypes = this.members
       .reduce((acc, member) => [...acc, ...member.getParameters()], [])
-      .map(params => params.getReturnType()));
-    const all = [...returnTypes, ...parameterTypes];
+      .map(params => params.getReturnType());
+    const ignoreModules = ['void', 'async'];
+    const all = [...returnTypes, ...parameterTypes]
+      .filter(type => ignoreModules.indexOf(type) === -1);
     return _.uniq(all);
   }
 
-  getNativeModules() { // eslint-disable-line class-methods-use-this
-    const isValid = dep => ['EventEmitter'].indexOf(dep) !== -1;
-    return _.filter(this._getDependencies(), isValid);
+  static get langNativeModules() {
+    return {
+      ecmascript6: ['EventEmitter'],
+    };
+  }
+
+  getNativeModules() {
+    // how to select language specific native modules..
+    const nativeModules = Class.langNativeModules.ecmascript6;
+    const allDeps = this._getDependencies();
+    const isValid = dep => nativeModules.indexOf(dep) !== -1;
+    return _.filter(allDeps, isValid);
   }
 
   get3rdPartyModules() {
     // figure out 3rd party dependencies
     const native = this.getNativeModules();
+    const allDeps = this._getDependencies();
     const isValid = dep => native.indexOf(dep) === -1;
-    return _.filter(this._getDependencies(), isValid);
+    return _.filter(allDeps, isValid);
   }
 
-  getAppModules() { // eslint-disable-line class-methods-use-this
+  getAppModules() {
     const native = this.getNativeModules();
     const extDep = this.get3rdPartyModules();
     const exluded = [...native, ...extDep];

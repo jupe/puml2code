@@ -17,10 +17,12 @@ interface Type {
 
 class Scheduler {
     +constructor(Queue queue, Resources resource)
+    -{abstract}Type getType()
     -privFunc(Queue q)
-    -async privAsyncFunc(Queue queue)
-    -Queue _queue
-    -Resources _resoures
+    -async privAsyncFunc(Queue queue=[])
+    +{abstract} async iterator(Object sort={})
+    -Queue *queue
+    -Resources resoures
 }
 
 
