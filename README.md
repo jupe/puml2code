@@ -36,15 +36,21 @@ $ npm i -g puml2code
 ### Usage
 
 ```
-$ Usage: cli [options]
+$ puml2code -h
+Usage: puml2code [options]
 
 Options:
   -V, --version       output the version number
-  -i, --input [file]  input .puml file
-  -l, --lang [lang]   select output code language (default: "es6")
-  -o, --out [path]    Output path (default: "console")
+  -i, --input [file]  input .puml file, or "stdin"
+  -l, --lang [lang]   Optional output source code language (default: "ecmascript6")
+  -o, --out [path]    Output path
   -h, --help          output usage information
 
+Supported languages: coffeescript, csharp, ecmascript5, ecmascript6, java, php, python, ruby, typescript
+
+Examples:
+  $ puml2code -i input.puml -l ecmascript6 -o out
+  $ puml2code -h
 ```
 
 e.g.
