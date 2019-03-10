@@ -19,6 +19,8 @@ const parseArgs = argv => program
     print('Examples:');
     print('  $ puml2code -i input.puml -l ecmascript6 -o out');
     print('  $ puml2code -h');
+    print('Use DEBUG=puml2code env variable to get traces. Example:');
+    print('  $ DEBUG=puml2code puml2code -i input.puml');
   })
   .parse(argv);
 
@@ -44,8 +46,9 @@ const getSource = (args) => {
 };
 
 const execute = async (argv = process.argv, printer = console.log) => { // eslint-disable-line no-console
+  let args = {removeAllListeners: () => {}};
   try {
-    const args = parseArgs(argv);
+    args = parseArgs(argv);
     const puml = await getSource(args);
     const output = await puml.generate(args.lang);
     if (args.out) {
@@ -54,9 +57,11 @@ const execute = async (argv = process.argv, printer = console.log) => { // eslin
       output.print(printer);
     }
     logger.debug('ready');
+    args.removeAllListeners();
     return 0;
   } catch (error) {
     logger.error(error);
+    args.removeAllListeners();
     return 1;
   }
 };

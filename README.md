@@ -51,6 +51,8 @@ Supported languages: coffeescript, csharp, ecmascript5, ecmascript6, java, php, 
 Examples:
   $ puml2code -i input.puml -l ecmascript6 -o out
   $ puml2code -h
+Use DEBUG=puml2code env variable to get traces. Example:
+  $ DEBUG=puml2code puml2code -i input.puml
 ```
 
 e.g.
@@ -93,6 +95,7 @@ class Scheduler {
 }
 ```
 See more output examples [here](examples)
+
 
 ### LICENSE:
 [MIT](LICENSE)
