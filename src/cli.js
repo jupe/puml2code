@@ -46,7 +46,7 @@ const getSource = (args) => {
 };
 
 const execute = async (argv = process.argv, printer = console.log) => { // eslint-disable-line no-console
-  let args = {removeAllListeners: () => {}};
+  let args = { removeAllListeners: () => {} };
   try {
     args = parseArgs(argv);
     const puml = await getSource(args);
