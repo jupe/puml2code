@@ -20,8 +20,9 @@ class Scheduler {
     -{abstract}Type getType()
     -privFunc(Queue q)
     -async privAsyncFunc(Queue queue=[])
-    -Queue _queue
-    -Resources _resoures
+    +{abstract} async iterator(Object sort={})
+    -Queue *queue
+    -Resources resoures
 }
 
 

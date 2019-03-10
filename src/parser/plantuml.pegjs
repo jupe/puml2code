@@ -114,7 +114,7 @@ returntype
 objectname
   = objectname:([A-Za-z_][A-Za-z0-9.]*) { return [objectname[0], objectname[1].join("")].join("") }
 membername
-  = items:([A-Za-z_][A-Za-z0-9_]*) { return [items[0], items[1].join("")].join("") }
+  = items:([A-Za-z_\*][A-Za-z0-9_]*) { return [items[0], items[1].join("")].join("") }
 defaultvalue
   = items:([{}\[\]A-Za-z0-9_]*) { return items.join("") }
 accessortype

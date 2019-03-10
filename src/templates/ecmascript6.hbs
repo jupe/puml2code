@@ -1,10 +1,10 @@
 {{#if getNativeModules}}// native modules
-{{#each getNativeModules}}const {{getName}} = require('{{getName}}');{{/each}}
+{{#each getNativeModules}}const {{this}} = require('{{this}}');{{/each}}
 {{/if}}{{#if get3rdPartyModules}}// 3rd party modules
 {{#each get3rdPartyModules}}const {{this}} = require('{{this}}');
 {{/each}}
 {{/if}}{{#if getAppModules}}// application modules
-{{#each getAppModules}}const {{getName}} = require('{{getName}}');{{/each}}
+{{#each getAppModules}}const {{this}} = require('{{this}}');{{/each}}
 {{/if}}
 
 /**
