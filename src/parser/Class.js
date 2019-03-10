@@ -10,6 +10,15 @@ class Class {
     this.nNamespace = null;
   }
 
+  static splitArrays(acc, dep) {
+    // List<Value> -> [List, Value]
+    const parts = dep.split('<');
+    parts.forEach((part) => {
+      acc.push(_.trimEnd(part, '>'));
+    });
+    return acc;
+  }
+
   _getDependencies() {
     const returnTypes = this.members.map(member => member.getReturnType());
     const parameterTypes = this.members
@@ -17,7 +26,9 @@ class Class {
       .map(params => params.getReturnType());
     const ignoreModules = ['void', 'async'];
     const all = [...returnTypes, ...parameterTypes]
+      .reduce(Class.splitArrays, [])
       .filter(type => ignoreModules.indexOf(type) === -1);
+
     return _.uniq(all);
   }
 
@@ -32,7 +43,7 @@ class Class {
     const nativeModules = Class.langNativeModules.ecmascript6;
     const allDeps = this._getDependencies();
     const isValid = dep => nativeModules.indexOf(dep) !== -1;
-    return _.filter(allDeps, isValid);
+    return _.uniq(_.filter(allDeps, isValid));
   }
 
   get3rdPartyModules() {

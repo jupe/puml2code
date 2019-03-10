@@ -27,11 +27,11 @@ class {{getFullName}}{{#if getExtends}} extends {{#with getExtends}}{{getFullNam
 
   /**{{#if getNote}}
    * {{getNote}}{{/if}}{{#each getParameters}}
-   * @param { {{getReturnType}} } {{getName}} TBD{{#if getDefaultValue}}, default={{getDefaultValue}}{{/if}}{{/each}}{{#if needsReturnStatement}}
+   * @param { {{SafeString this getReturnType}} } {{getName}}{{#if getDefaultValue}}={{SafeString this getDefaultValue}}{{/if}} TBD{{/each}}{{#if needsReturnStatement}}
    * @return { {{getReturnType}} }{{/if}}{{#if isPrivate}}
    * @private{{/if}}
    */
-  {{#if isAsync}}async {{/if}}{{getName}}({{#if getParameters}}{{#each getParameters}}{{#if @first}}{{else}}, {{/if}}{{#if getName}}{{getName}}{{#if getDefaultValue}}={{getDefaultValue}}{{/if}}{{else}}param{{@index}}{{/if}}{{/each}}{{/if}}) {
+  {{#if isAsync}}async {{/if}}{{getName}}({{#if getParameters}}{{#each getParameters}}{{#if @first}}{{else}}, {{/if}}{{#if getName}}{{getName}}{{#if getDefaultValue}}={{SafeString this getDefaultValue}}{{/if}}{{else}}param{{@index}}{{/if}}{{/each}}{{/if}}) {
     {{#if isInterface}}throw new Error('Not implemented');{{else}}{{#if this.needsReturnStatement}}return {{getReturnType}};{{else}}// TBD{{/if}}{{/if}}{{/if}}
   }{{/each}}
 }

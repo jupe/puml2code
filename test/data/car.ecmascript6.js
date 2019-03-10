@@ -41,9 +41,9 @@ class Car extends Vehicle {
   }
 
   /**
-   * @param { String } model TBD
+   * @param { String } model='lada' TBD
    */
-  setModel(model) {
+  setModel(model='lada') {
     // TBD
   }
 

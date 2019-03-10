@@ -116,7 +116,7 @@ objectname
 membername
   = items:([A-Za-z_\*][A-Za-z0-9_]*) { return [items[0], items[1].join("")].join("") }
 defaultvalue
-  = items:([{}\[\]A-Za-z0-9_]*) { return items.join("") }
+  = items:([{}\[\]A-Za-z0-9_\'\"]*) { return items.join("") }
 accessortype
   = publicaccessor
   / privateaccessor
