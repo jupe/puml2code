@@ -10,7 +10,7 @@ interface Vehicle {
 }
 
 abstract Car {
-  + void setModel(String model)
+  + void setModel(String model='lada')
   + void setMake(String make)
   + void setYear(Number)
   + String getModel()
