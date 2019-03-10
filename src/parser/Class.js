@@ -23,13 +23,13 @@ class Class {
 
   static get langNativeModules() {
     return {
-      ecmascript6: ['EventEmitter']
+      ecmascript6: ['EventEmitter'],
     };
   }
 
   getNativeModules() {
     // how to select language specific native modules..
-    const nativeModules = Class.langNativeModules['ecmascript6'];
+    const nativeModules = Class.langNativeModules.ecmascript6;
     const allDeps = this._getDependencies();
     const isValid = dep => nativeModules.indexOf(dep) !== -1;
     return _.filter(allDeps, isValid);
