@@ -27,7 +27,7 @@ class {{getFullName}}{{#if getExtends}} extends {{#with getExtends}}{{getFullNam
 
   /**{{#if getNote}}
    * {{getNote}}{{/if}}{{#each getParameters}}
-   * @param { {{getReturnType}} } {{getName}} TBD{{#if getDefaultValue}}, default={{getDefaultValue}}{{/if}}{{/each}}{{#if needsReturnStatement}}
+   * @param { {{SafeString this getReturnType}} } {{getName}} TBD{{#if getDefaultValue}}, default={{getDefaultValue}}{{/if}}{{/each}}{{#if needsReturnStatement}}
    * @return { {{getReturnType}} }{{/if}}{{#if isPrivate}}
    * @private{{/if}}
    */

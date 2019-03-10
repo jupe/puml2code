@@ -17,6 +17,19 @@ class PlantUmlToCode {
   constructor(stream, { logger = dummyLogger } = {}) {
     this._stream = stream;
     this.logger = logger;
+    PlantUmlToCode._registerHandlebarsHelpers();
+  }
+
+  static _registerHandlebarsHelpers() {
+    // helper to avoid escape rendering
+    // Usage
+    // {{SafeString this getName}} where 'this' is an class instance and 'getName' are instance function
+    // or
+    // {{SafeString this}} where 'this' is an string
+    const SafeString = (context, method) => new Handlebars.SafeString(
+      _.isFunction(method) ? method.call(context) : context,
+    );
+    Handlebars.registerHelper('SafeString', SafeString);
 
     // Workaround for an apparent bug in Handlebars: functions are not called with the parent scope
     // as context.
@@ -33,7 +46,6 @@ class PlantUmlToCode {
     // {{#each getFields}}
     //   {{#call ../this ../getFullName}}
     // {{/each}}
-
     Handlebars.registerHelper('call', (context, member) => member.call(context));
   }
 
