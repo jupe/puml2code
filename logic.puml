@@ -1,0 +1,44 @@
+@startuml
+
+start
+
+:parse cli;
+note right
+  cli parser based on commander
+end note
+
+if (args.input) then ("stdin")
+  :read stdin stream;
+else if (exists)
+  :read file;
+else (no)
+  :exit;
+  end
+endif
+
+:parse plantuml string;
+note right
+  parser based on PEG.js
+end note
+
+if (select template) then (exists)
+  :select code template;
+else (not exists)
+  :exit;
+  end
+endif
+
+:fill code template;
+note right
+  handlebars.js as a template engine
+end note
+
+if (args.output) then (given)
+  :generate source code files;
+else
+  :print to console;
+endif
+
+stop
+
+@enduml
