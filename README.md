@@ -97,6 +97,9 @@ class Scheduler {
 ```
 See more output examples [here](examples)
 
+## Logic
+![logi](logic.png)
+
 
 ### LICENSE:
 [MIT](LICENSE)
