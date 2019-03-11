@@ -24,14 +24,14 @@ describe('cli', () => {
     process.exit.callsFake(() => {
       throw new Error('ok');
     });
-    await cli(['node', 'puml2code', '-V']);
+    await cli(['node', 'puml2code', '-V']).catch(() => {});
     expect(process.exit.calledOnceWith(0)).to.be.true;
   });
   it('help', async () => {
     process.exit.callsFake(() => {
       throw new Error('ok');
     });
-    await cli(['node', 'puml2code', '-h']);
+    await cli(['node', 'puml2code', '-h']).catch(() => {});
     expect(process.exit.calledOnceWith(0)).to.be.true;
   });
   it('invalid args', () => {

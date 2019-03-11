@@ -62,7 +62,7 @@ const execute = async (argv = process.argv, printer = console.log) => { // eslin
   } catch (error) {
     logger.error(error);
     args.removeAllListeners();
-    return 1;
+    throw error;
   }
 };
 module.exports = execute;

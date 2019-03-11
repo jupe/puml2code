@@ -81,10 +81,11 @@ class PlantUmlToCode {
       return new Output(files, { logger: this.logger });
     } catch (error) {
       if (error instanceof SyntaxError) {
-        this.logger.error(`line: ${error.location.start.line} column: ${error.location.start.column}: ${error}`);
-      } else {
-        this.logger.error(error);
+        const str = `line: ${error.location.start.line} column: ${error.location.start.column}: ${error}`;
+        this.logger.error(str);
+        throw new Error(str);
       }
+      this.logger.error(error);
       throw error;
     }
   }
