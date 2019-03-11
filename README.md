@@ -1,3 +1,4 @@
+[![npm version](https://badge.fury.io/js/puml2code.svg)](https://badge.fury.io/js/puml2code)
 [![CircleCI](https://circleci.com/gh/jupe/puml2code/tree/master.svg?style=svg)](https://circleci.com/gh/jupe/puml2code/tree/master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![License badge](https://img.shields.io/badge/license-MIT-blue.svg)](https://img.shields.io) [![Greenkeeper badge](https://badges.greenkeeper.io/jupe/puml2code.svg)](https://greenkeeper.io/)
