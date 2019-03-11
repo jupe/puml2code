@@ -50,6 +50,35 @@ $ npm test
 * template engine: [handlebars](http://handlebarsjs.com)
 * puml parser engine: [pegjs](http://pegjs.org)
 
+**NOTE:**
+
+parser and code templates are not perfect. There is planty of cases that is not yet supported. Basic scenarious should work.
+
+### Problems?
+
+1) If `puml2code` causes error like:
+    ```
+    Error: line: 21 column: 3: SyntaxError: Expected "'", "--", "..", "__", "abstract ", 
+    "class ", "hide empty members", "interface ", "namespace ", "note ", "skinparam", "title ",
+    [ \t], [#], [+], [A-Za-z_], [\-], [\n], [\r\n], [^ ,\n\r\t(){}], or [}] but "{" found.
+    ```
+    it's most probably because [PEG.js based grammar](src/parser/plantuml.pegjs) does not have support 
+    for plantuml format you have in input file. 
+    
+    **What should I do?**
+    
+    Please [raise ticket](https://github.com/jupe/puml2code/issues/new) with example plantuml file that does not work
+
+2) generated source code does not look like you expected
+    
+    **What should I do?**
+    
+    Please [raise ticket](https://github.com/jupe/puml2code/issues/new) with example plantuml file and generated source
+    code with some description how it should look like.
+
+
+**NOTE** If you are able to create PR that solves your issue it would be even more wellcome.
+
 ### Usage
 
 ```
