@@ -67,13 +67,13 @@ parser and code templates are not perfect. There is planty of cases that is not 
     
     **What should I do?**
     
-    Please [raise ticket](https://github.com/jupe/puml2code/issues/new) with example plantuml file that does not work
+    Please [raise ticket](https://github.com/jupe/puml2code/issues/new?template=grammar.md) with example plantuml file that does not work
 
 * generated source code does not look like you expected
     
     **What should I do?**
     
-    Please [raise ticket](https://github.com/jupe/puml2code/issues/new) with example plantuml file and generated source
+    Please [raise ticket](https://github.com/jupe/puml2code/issues/new?template=output.md) with example plantuml file and generated source
     code with some description how it should look like.
 
 
