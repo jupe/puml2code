@@ -43,13 +43,13 @@ Options:
   -V, --version       output the version number
   -i, --input [file]  input .puml file, or "stdin"
   -l, --lang [lang]   Optional output source code language (default: "ecmascript6")
-  -o, --out [path]    Output path
+  -o, --out [path]    Output path. When not given output is printed to console.
   -h, --help          output usage information
 
 Supported languages: coffeescript, csharp, ecmascript5, ecmascript6, java, php, python, ruby, typescript
 
 Examples:
-  $ puml2code -i input.puml -l ecmascript6 -o out
+  $ puml2code -i input.puml -l ecmascript6
   $ puml2code -h
 Use DEBUG=puml2code env variable to get traces. Example:
   $ DEBUG=puml2code puml2code -i input.puml

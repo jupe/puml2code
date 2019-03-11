@@ -10,14 +10,14 @@ const parseArgs = argv => program
   .version('0.1.0')
   .option('-i, --input [file]', 'input .puml file, or "stdin"')
   .option('-l, --lang [lang]', 'Optional output source code language', options, 'ecmascript6')
-  .option('-o, --out [path]', 'Output path')
+  .option('-o, --out [path]', 'Output path. When not given output is printed to console.')
   .on('--help', () => {
     const print = console.log; // eslint-disable-line no-console
     print('');
     print(`Supported languages: ${Puml.languages.join(', ')}`);
     print('');
     print('Examples:');
-    print('  $ puml2code -i input.puml -l ecmascript6 -o out');
+    print('  $ puml2code -i input.puml -l ecmascript6');
     print('  $ puml2code -h');
     print('Use DEBUG=puml2code env variable to get traces. Example:');
     print('  $ DEBUG=puml2code puml2code -i input.puml');
