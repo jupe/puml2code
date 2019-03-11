@@ -21,7 +21,7 @@ note right
   parser based on PEG.js
 end note
 
-if (args.lang) then (exists)
+if (select template) then (exists)
   :select code template;
 else (not exists)
   :exit;

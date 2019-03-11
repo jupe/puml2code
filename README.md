@@ -11,19 +11,35 @@ puml parser based on [plantuml-code-generator](https://github.com/bafolts/plantu
 
 ### Installation
 
-```
+Global installation brings `puml2code` command to PATH
+```bash
 $ npm i -g puml2code
 ```
+
+Development installation
+```bash
+$ git clone https://github.com/jupe/puml2code.git
+$ npm i
+$ bin/puml2code -h
+```
+
+Running tests
+```bash
+$ npm test
+```
+
 
 ### Supported output languages
 * [CoffeeScript](test/data/car.coffeescript.coffee) (coffeescript)
 * [C#](test/data/car.csharp.cs) (csharp)
-* [ECMAScript5](test/data/car.ecmascript5.js) (javascript)
-* [ECMAScript6](test/data/car.ecmascript6.js) (javascript2.0) [default]
+* [ECMAScript5](test/data/car.ecmascript5.js) (ecmascript5)
+* [ECMAScript6](test/data/car.ecmascript6.js) (ecmascript6) [default]
 * [Java](test/data/car.java.java) (java)
 * [PHP](test/data/car.php.php) (php)
+* [python](test/data/car.python.ts) (python)
 * [Ruby](test/data/car.ruby.rb) (ruby)
 * [TypeScript](test/data/car.typescript.ts) (typescript)
+
 
 ### Supported features
 * output: file per class/console
@@ -97,7 +113,7 @@ class Scheduler {
 ```
 See more output examples [here](examples)
 
-## Logic
+## Tool logic
 ![logi](logic.png)
 
 
