@@ -56,7 +56,7 @@ parser and code templates are not perfect. There is planty of cases that is not 
 
 ### Problems?
 
-1) If `puml2code` causes error like:
+* If `puml2code` causes error like:
     ```
     Error: line: 21 column: 3: SyntaxError: Expected "'", "--", "..", "__", "abstract ", 
     "class ", "hide empty members", "interface ", "namespace ", "note ", "skinparam", "title ",
@@ -69,7 +69,7 @@ parser and code templates are not perfect. There is planty of cases that is not 
     
     Please [raise ticket](https://github.com/jupe/puml2code/issues/new) with example plantuml file that does not work
 
-2) generated source code does not look like you expected
+* generated source code does not look like you expected
     
     **What should I do?**
     
