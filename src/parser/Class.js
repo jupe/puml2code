@@ -100,7 +100,7 @@ class Class {
       python: '__init__',
       ruby: 'initialize',
       cpp: this.getName(),
-      typescript: 'constructor'
+      typescript: 'constructor',
     };
     return Object.values(languageSpecific).indexOf(name) !== -1;
   }
@@ -148,9 +148,11 @@ class Class {
   hasFields() {
     return !!this.getFields().length;
   }
+
   hasPrivateFields() {
     return !!this.getPrivateFields().length;
   }
+
   getPrivateFields() {
     return _.filter(this.getFields(), field => field.isPrivate());
   }

@@ -42,7 +42,8 @@ class Namespace {
     for (let i = 0, { length } = this.aItems; i < length; i += 1) {
       if (this.aItems[i] instanceof Namespace) {
         this.aItems[i].setNamespace(this);
-      } else if (this.aItems[i] instanceof Class || this.aItems[i] instanceof AbstractClass || this.aItems[i] instanceof InterfaceClass) {
+      } else if (this.aItems[i] instanceof Class || this.aItems[i] instanceof AbstractClass
+          || this.aItems[i] instanceof InterfaceClass) {
         this.aItems[i].setNamespace(this);
       } else if (this.aItems[i] instanceof Connection) {
         this.aItems[i].setNamespace(this);

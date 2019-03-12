@@ -120,7 +120,7 @@ class PlantUmlToCode {
       python: 'py',
       ruby: 'rb',
       typescript: 'ts',
-      cpp: 'cpp'
+      cpp: 'cpp',
     };
   }
 
