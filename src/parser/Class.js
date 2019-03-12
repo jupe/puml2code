@@ -6,6 +6,7 @@ class Class {
   constructor(className, members) {
     this.cExtends = null;
     this.members = members || [];
+    this.members.forEach(member => member.setIsConstructor(this.isConstructor.bind(this)));
     this.className = className;
     this.nNamespace = null;
   }
@@ -89,17 +90,49 @@ class Class {
     return this.className;
   }
 
+  isConstructor(name) {
+    const languageSpecific = {
+      coffeescript: 'constructor',
+      ecmascript5: 'constructor',
+      ecmascript6: 'constructor',
+      java: this.getName(),
+      php: '__construct',
+      python: '__init__',
+      ruby: 'initialize',
+      cpp: this.getName(),
+      typescript: 'constructor'
+    };
+    return Object.values(languageSpecific).indexOf(name) !== -1;
+  }
+
   getConstructorArgs() {
     const methods = this.getMethods();
-    const cs = methods.find(method => method.getName() === 'constructor');
+    const cs = methods.find(method => this.isConstructor(method.getName()));
     if (cs) {
       return cs.getParameters();
     }
     return [];
   }
 
+  hasPublichMethods() {
+    return !!this.getMethods().length;
+  }
+
+  getPublicMethods() {
+    return _.filter(this.getMethods(), method => method.isPublic());
+  }
+
+
   hasMethods() {
     return !!this.getMethods().length;
+  }
+
+  getPrivateMethods() {
+    return _.filter(this.getMethods(), method => method.isPrivate());
+  }
+
+  hasPrivateMethods() {
+    return !!this.getPrivateMethods().length;
   }
 
   /**
@@ -114,6 +147,12 @@ class Class {
 
   hasFields() {
     return !!this.getFields().length;
+  }
+  hasPrivateFields() {
+    return !!this.getPrivateFields().length;
+  }
+  getPrivateFields() {
+    return _.filter(this.getFields(), field => field.isPrivate());
   }
 
   getFields() {

@@ -1,0 +1,26 @@
+class {{getFullName}}{{#if getExtends}}: public {{#with getExtends}}{{getFullName}}{{/with}}{{/if}} {
+{{#if hasPrivateFields}}
+  private:
+{{#each getPrivateFields}}
+    {{this.getReturnType}} {{this.getName}};
+{{/each}}{{/if}}
+  public:
+    {{getFullName}}({{#each getConstructorArgs}}{{#if @first}}{{else}}, {{/if}}{{#if getName}}{{getName}}{{else}}param{{@index}}{{/if}}{{/each}}) {
+      // @todo
+    }
+{{#if hasPublichMethods}}{{#each getPublichMethods}}{{#if isNotConstructor}}
+    {{this.getReturnType}} {{this.getName}}{{#if this.getParameters}}({{#each this.getParameters}}{{#if @first}}{{else}}, {{/if}}{{this.getReturnType}} {{#if this.getName}}{{this.getName}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(){{/if}} {
+    {{#if this.needsReturnStatement}}
+      return null;
+{{/if}}
+    }
+{{/if}}{{/each}}{{/if}}
+{{#if hasPrivateMethods}}
+  private:{{#each getMethods}}{{#if isNotConstructor}}
+    {{this.getReturnType}} {{this.getName}}{{#if this.getParameters}}({{#each this.getParameters}}{{#if @first}}{{else}}, {{/if}}{{this.getReturnType}} {{#if this.getName}}{{this.getName}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(){{/if}} {
+{{#if this.needsReturnStatement}}
+      return null;
+{{/if}}
+    }
+{{/if}}{{/each}}{{/if}}
+}

@@ -5,6 +5,27 @@ class Field {
     this.sFieldName = fieldName;
     this.bInterface = false;
     this.bAbstract = !!abstract;
+    this.isConstructor = undefined;
+  }
+
+  isPrivate() {
+    return this.getAccessType() === '-';
+  }
+
+  isProtected() {
+    return this.getAccessType() === '#';
+  }
+
+  isPublic() {
+    return this.getAccessType() === '+';
+  }
+
+  setIsConstructor(isConstructor) {
+    this.isConstructor = isConstructor;
+  }
+
+  isNotConstructor() {
+    return !this.isConstructor(this.getName());
   }
 
   setInterface() {
@@ -29,10 +50,6 @@ class Field {
 
   getName() {
     return this.sFieldName;
-  }
-
-  isNotConstructor() {
-    return ['constructor', '__init__'].indexOf(this.getName()) === -1;
   }
 
   getParameters() { // eslint-disable-line class-methods-use-this
