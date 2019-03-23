@@ -1,3 +1,7 @@
+/**
+ * \file Vehicle.cpp
+ */
+
 class Vehicle {
 
   public:
@@ -5,8 +9,11 @@ class Vehicle {
       // @todo
     }
 
-
 }
+
+/**
+ * \file Car.cpp
+ */
 
 class Car: public Vehicle {
   private:
@@ -19,8 +26,11 @@ class Car: public Vehicle {
       // @todo
     }
 
-
 }
+
+/**
+ * \file NamesInThings.cpp
+ */
 
 class NamesInThings {
   private:
@@ -31,23 +41,38 @@ class NamesInThings {
     NamesInThings() {
       // @todo
     }
-
   private:
+    /**
+     */
     void member() {
+
     }
 
+    /**
+     *  @return String1
+     */
     String1 member2() {
       return null;
     }
 
+    /**
+     */
     void member3() {
+
     }
 
+    /**
+     *  @return String2
+     */
     String2 member_s() {
       return null;
     }
 
 }
+
+/**
+ * \file Toyota.cpp
+ */
 
 class Toyota: public Car {
 
@@ -56,8 +81,11 @@ class Toyota: public Car {
       // @todo
     }
 
-
 }
+
+/**
+ * \file Honda.cpp
+ */
 
 class Honda: public Car {
 
@@ -66,8 +94,11 @@ class Honda: public Car {
       // @todo
     }
 
-
 }
+
+/**
+ * \file Ford.cpp
+ */
 
 class Ford: public Car {
 
@@ -76,8 +107,11 @@ class Ford: public Car {
       // @todo
     }
 
-
 }
+
+/**
+ * \file Hyundai.cpp
+ */
 
 class Hyundai: public Car {
 
@@ -85,7 +119,6 @@ class Hyundai: public Car {
     Hyundai() {
       // @todo
     }
-
 
 }
 

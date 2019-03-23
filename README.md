@@ -32,6 +32,7 @@ $ npm test
 ### Supported output languages
 * [CoffeeScript](test/data/car.coffeescript.coffee) (coffeescript)
 * [C#](test/data/car.csharp.cs) (csharp)
+* [C++](test/data/car.cpp.cpp) (cpp)
 * [ECMAScript5](test/data/car.ecmascript5.js) (ecmascript5)
 * [ECMAScript6](test/data/car.ecmascript6.js) (ecmascript6) [default]
 * [Java](test/data/car.java.java) (java)
@@ -43,16 +44,37 @@ $ npm test
 
 ### Supported features
 * output: file per class/console
-* es6 extended with:
-  * code documentation
-  * imports based on parameter
-  * methods with parameters
 * template engine: [handlebars](http://handlebarsjs.com)
 * puml parser engine: [pegjs](http://pegjs.org)
 
+Features supported per output language:
+
+|Language|supported|docs|deps imports|
+|--------|---------|---------|-------|
+|Coffeescript|✓|||
+|C#|✓|||
+|C++|✓|✓||
+|ECMAScript5|✓|||
+|ECMAScript6|✓|✓|✓|
+|Java|✓|||
+|PHP|✓|||
+|Python|✓|✓||
+|Ruby|✓|||
+|TypeScript|✓|||
+
+Feature explanations:
+
+
+|feature|notes|
+|-------|----|
+|supported|at least source code can be generated|
+|docs|Documentation comments, eg python: docstring|
+|deps imports|Try to detect dependencies and import them top of source files|
+
+
 **NOTE:**
 
-parser and code templates are not perfect. There is planty of cases that is not yet supported. Basic scenarious should work.
+parser and code templates are not perfect. There is planty of cases that is not yet covered or supported. Basic scenarious should work.
 
 ### Problems?
 

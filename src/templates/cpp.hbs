@@ -1,3 +1,7 @@
+/**
+ * \file {{getFullName}}.cpp
+ */
+
 class {{getFullName}}{{#if getExtends}}: public {{#with getExtends}}{{getFullName}}{{/with}}{{/if}} {
 {{#if hasPrivateFields}}
   private:
@@ -7,20 +11,21 @@ class {{getFullName}}{{#if getExtends}}: public {{#with getExtends}}{{getFullNam
   public:
     {{getFullName}}({{#each getConstructorArgs}}{{#if @first}}{{else}}, {{/if}}{{#if getName}}{{getName}}{{else}}param{{@index}}{{/if}}{{/each}}) {
       // @todo
-    }
-{{#if hasPublichMethods}}{{#each getPublichMethods}}{{#if isNotConstructor}}
+    }{{#if hasPublichMethods}}{{#each getPublichMethods}}{{#if isNotConstructor}}
     {{this.getReturnType}} {{this.getName}}{{#if this.getParameters}}({{#each this.getParameters}}{{#if @first}}{{else}}, {{/if}}{{this.getReturnType}} {{#if this.getName}}{{this.getName}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(){{/if}} {
     {{#if this.needsReturnStatement}}
-      return null;
-{{/if}}
+      return null;{{/if}}
     }
 {{/if}}{{/each}}{{/if}}
 {{#if hasPrivateMethods}}
   private:{{#each getMethods}}{{#if isNotConstructor}}
+    /**{{#each this.getParameters}}
+     *  @param {{getName}} TBD{{/each}}{{#if this.needsReturnStatement}}
+     *  @return {{this.getReturnType}}{{/if}}
+     */
     {{this.getReturnType}} {{this.getName}}{{#if this.getParameters}}({{#each this.getParameters}}{{#if @first}}{{else}}, {{/if}}{{this.getReturnType}} {{#if this.getName}}{{this.getName}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(){{/if}} {
 {{#if this.needsReturnStatement}}
-      return null;
-{{/if}}
+      return null;{{/if}}
     }
 {{/if}}{{/each}}{{/if}}
 }
