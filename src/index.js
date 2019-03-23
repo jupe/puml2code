@@ -102,7 +102,7 @@ class PlantUmlToCode {
     this.logger.silly(`Read template: ${tmpl}`);
     let source = await Promise.fromCallback(cb => readFile(tmpl, cb));
     source = source.toString();
-    return Handlebars.compile(source);
+    return Handlebars.compile(source, { noEscape: true });
   }
 
   static get languages() {
@@ -120,6 +120,7 @@ class PlantUmlToCode {
       python: 'py',
       ruby: 'rb',
       typescript: 'ts',
+      cpp: 'cpp',
     };
   }
 

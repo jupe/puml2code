@@ -17,7 +17,6 @@ class Vehicle(abs.ABC):
         """
         return null
 
-
 """
 @package Abstract Car
 """
@@ -25,6 +24,9 @@ class Car(Vehicle):
     def __init__(self):
         """
         Constructor for Car
+        :param model: TBD
+        :param make: TBD
+        :param year: TBD
         """
         self.model = None
         self.make = None
@@ -32,43 +34,37 @@ class Car(Vehicle):
 
     def setModel(self, model):
         """
-        :param model:
+        :param model: TBD
 
         """
         pass
-
     def setMake(self, make):
         """
-        :param make:
+        :param make: TBD
 
         """
         pass
-
     def setYear(self, param0):
         """
-        :param :
+        :param : TBD
 
         """
         pass
-
     def getModel(self):
         """
         :return: String
         """
         return null
-
     def getMake(self):
         """
         :return: String
         """
         return null
-
     def getYear(self):
         """
         :return: Number
         """
         return null
-
 
 """
 @package NamesInThings
@@ -77,6 +73,10 @@ class NamesInThings():
     def __init__(self):
         """
         Constructor for NamesInThings
+        :param field: TBD
+        :param field1: TBD
+        :param _some_private: TBD
+        :param field_2: TBD
         """
         self.field = None
         self.field1 = None
@@ -88,25 +88,21 @@ class NamesInThings():
 
         """
         pass
-
     def _member2(self):
         """
         :return: String1
         """
         return null
-
     def member3(self):
         """
 
         """
         pass
-
     def _member_s(self):
         """
         :return: String2
         """
         return null
-
 
 """
 @package Toyota

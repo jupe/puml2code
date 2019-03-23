@@ -4,25 +4,24 @@
 @package {{#if isAbstract}}Abstract {{/if}}{{#if isInterface}}Interface {{/if}}{{getFullName}}
 """
 class {{getFullName}}({{#if isInterface}}abs.ABC{{/if}}{{#if getExtends}}{{#with getExtends}}{{getFullName}}{{/with}}{{/if}}):
-    def __init__(self):
+    def __init__(self{{#each getConstructorArgs}}, {{#if getName}}{{getName}}{{else}}param{{@index}}{{/if}}{{/each}}):
         """
-        Constructor for {{getFullName}}
+        Constructor for {{getFullName}}{{#each getFields}}
+        :param {{getName}}: TBD{{/each}}
         """{{#if hasFields}}{{#each getFields}}
         self.{{this.getName}} = None{{/each}}{{else}}
         pass{{/if}}
 
-{{#each getMethods}}{{#if isInterface}}
+{{#each getMethods}}{{#if isNotConstructor}}{{#if isInterface}}
     @abc.abstractmethod
 {{/if}}
-    def {{#if this.isPrivate}}_{{/if}}{{this.getName}}{{#if this.getParameters}}(self, {{#each this.getParameters}}{{#if @first}}{{else}},{{/if}}{{#if this.getName}}{{this.getName}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(self){{/if}}:
+    def {{#if this.isPrivate}}_{{/if}}{{this.getName}}{{#if this.getParameters}}(self, {{#each this.getParameters}}{{#if @first}}{{else}}, {{/if}}{{#if this.getName}}{{this.getName}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(self){{/if}}:
         """
-{{#each getParameters}}        :param {{getName}}:
+{{#each getParameters}}        :param {{getName}}: TBD
 {{/each}}{{#if needsReturnStatement}}        :return: {{getReturnType}}{{/if}}
         """
     {{#if this.needsReturnStatement}}
         return null
 {{else}}
         pass
-{{/if}}
-
-{{/each}}
+{{/if}}{{/if}}{{/each}}

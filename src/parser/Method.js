@@ -8,24 +8,12 @@ class Method extends Field {
     this.sReturnType = returnType;
   }
 
-  isPrivate() {
-    return this.getAccessType() === '-';
-  }
-
-  isPublic() {
-    return this.getAccessType() === '+';
-  }
-
   getReturnType() {
     return this.sReturnType;
   }
 
   needsReturnStatement() {
     return ['void', 'async'].indexOf(this.sReturnType) === -1;
-  }
-
-  isNotConstructor() {
-    return ['constructor', '__init__'].indexOf(this.getName()) === -1;
   }
 
   isAsync() {
