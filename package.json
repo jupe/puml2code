@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/jupe/puml2code#readme",
   "dependencies": {
-    "bluebird": "^3.5.3",
+    "bluebird": "^3.5.5",
     "camelcase": "^5.2.0",
     "commander": "^2.19.0",
     "debug": "^4.1.1",
