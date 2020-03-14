@@ -41,7 +41,7 @@
     "camelcase": "^5.2.0",
     "commander": "^4.0.0",
     "debug": "^4.1.1",
-    "handlebars": "^4.1.1",
+    "handlebars": "^4.7.3",
     "lodash": "^4.17.11",
     "pegjs": "^0.10.0"
   },
