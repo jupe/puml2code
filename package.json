@@ -39,7 +39,7 @@
   "dependencies": {
     "bluebird": "^3.5.5",
     "camelcase": "^5.2.0",
-    "commander": "^4.0.0",
+    "commander": "^4.1.1",
     "debug": "^4.1.1",
     "handlebars": "^4.1.1",
     "lodash": "^4.17.11",
