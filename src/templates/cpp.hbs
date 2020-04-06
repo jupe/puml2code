@@ -1,31 +1,64 @@
 /**
- * \file {{getFullName}}.cpp
+ * \file {{getFullName}}.h
  */
 
+#ifndef {{getFullName}}_h
+#define {{getFullName}}_h
+
+{{#if getExtends}}#include "{{#with getExtends}}{{getFullName}}{{/with}}.h"{{/if}}
+
+
 class {{getFullName}}{{#if getExtends}}: public {{#with getExtends}}{{getFullName}}{{/with}}{{/if}} {
-{{#if hasPrivateFields}}
-  private:
-{{#each getPrivateFields}}
-    {{this.getReturnType}} {{this.getName}};
-{{/each}}{{/if}}
+{{!#if hasPrivateFields}}
+  private:{{#each getPrivateFields}}
+    {{this.getReturnType}} {{this.getName}};{{/each}}{{!/if}}
+  protected:{{#each getFields}}{{#if this.isProtected}}
+    {{this.getReturnType}} {{this.getName}};{{/if}}{{/each}}
+  public:{{#each getFields}}{{#if this.isPublic}}
+    {{this.getReturnType}} {{this.getName}};{{/if}}{{/each}}
+
   public:
-    {{getFullName}}({{#each getConstructorArgs}}{{#if @first}}{{else}}, {{/if}}{{#if getName}}{{getName}}{{else}}param{{@index}}{{/if}}{{/each}}) {
+    {{getFullName}}({{#each getConstructorArgs}}{{#if @first}}{{else}}, {{/if}}{{#if getName}}{{getName}}{{#if getDefaultValue}}={{SafeString this getDefaultValue}}{{/if}}{{else}}param{{@index}}{{/if}}{{/each}}){{#if getExtends}}: {{#with getExtends}}{{getFullName}}{{/with}}(){{/if}}
+    {
       // @todo
-    }{{#if hasPublichMethods}}{{#each getPublichMethods}}{{#if isNotConstructor}}
-    {{this.getReturnType}} {{this.getName}}{{#if this.getParameters}}({{#each this.getParameters}}{{#if @first}}{{else}}, {{/if}}{{this.getReturnType}} {{#if this.getName}}{{this.getName}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(){{/if}} {
-    {{#if this.needsReturnStatement}}
-      return null;{{/if}}
     }
-{{/if}}{{/each}}{{/if}}
-{{#if hasPrivateMethods}}
-  private:{{#each getMethods}}{{#if isNotConstructor}}
+    // Public methods
+{{#each getMethods}}{{#if isNotConstructor}}{{#if isPublic}}
     /**{{#each this.getParameters}}
      *  @param {{getName}} TBD{{/each}}{{#if this.needsReturnStatement}}
      *  @return {{this.getReturnType}}{{/if}}
      */
-    {{this.getReturnType}} {{this.getName}}{{#if this.getParameters}}({{#each this.getParameters}}{{#if @first}}{{else}}, {{/if}}{{this.getReturnType}} {{#if this.getName}}{{this.getName}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(){{/if}} {
-{{#if this.needsReturnStatement}}
-      return null;{{/if}}
+    {{this.getReturnType}} {{this.getName}}{{#if this.getParameters}}({{#each this.getParameters}}{{#if @first}}{{else}}, {{/if}}{{this.getReturnType}} {{#if this.getName}}{{this.getName}}{{#if getDefaultValue}}={{SafeString this getDefaultValue}}{{/if}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(){{/if}} {
+      // @todo {{#if this.needsReturnStatement}}
+      return {{this.getReturnType}}();{{/if}}
     }
-{{/if}}{{/each}}{{/if}}
+{{/if}}{{/if}}{{/each}}
+
+{{!#if hasProtectedMethods}}
+  // Protected methods
+  protected:{{#each getMethods}}{{#if isNotConstructor}}{{#if isProtected}}
+    /**{{#each this.getParameters}}
+     *  @param {{getName}} TBD{{/each}}{{#if this.needsReturnStatement}}
+     *  @return {{this.getReturnType}}{{/if}}
+     */
+    {{this.getReturnType}} {{this.getName}}{{#if this.getParameters}}({{#each this.getParameters}}{{#if @first}}{{else}}, {{/if}}{{this.getReturnType}} {{#if this.getName}}{{this.getName}}{{#if getDefaultValue}}={{SafeString this getDefaultValue}}{{/if}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(){{/if}} {
+      // @todo {{#if this.needsReturnStatement}}
+      return {{this.getReturnType}}();{{/if}}
+    }
+{{/if}}{{/if}}{{/each}}{{!/if}}
+
+{{!#if hasPrivateMethods}}
+  // Private methods
+  private:{{#each getMethods}}{{#if isNotConstructor}}{{#if isPrivate}}
+    /**{{#each this.getParameters}}
+     *  @param {{getName}} TBD{{/each}}{{#if this.needsReturnStatement}}
+     *  @return {{this.getReturnType}}{{/if}}
+     */
+    {{this.getReturnType}} {{this.getName}}{{#if this.getParameters}}({{#each this.getParameters}}{{#if @first}}{{else}}, {{/if}}{{this.getReturnType}} {{#if this.getName}}{{this.getName}}{{#if getDefaultValue}}={{SafeString this getDefaultValue}}{{/if}}{{else}}param{{@index}}{{/if}}{{/each}}){{else}}(){{/if}} {
+      // @todo {{#if this.needsReturnStatement}}
+      return {{this.getReturnType}}();{{/if}}
+    }
+{{/if}}{{/if}}{{/each}}{{!/if}}
 }
+
+#endif // {{getFullName}}_h
