@@ -47,10 +47,10 @@ extends
   / connectorsize "|>" { var Extension = require("./Extension"); return new Extension(false) }
 connectorsize
   = ".."
-  / "-up-"
-  / "-down-"
-  / "-left-"
-  / "-right-"
+  / [-]+ "up" [-]+
+  / [-]+ "down" [-]+
+  / [-]+ "left" [-]+
+  / [-]+ "right" [-]+
   / "---"
   / "--"
   / [.]
@@ -110,7 +110,7 @@ methodparameter
   = noise item:returntype membername:([ ] membername)? [=] defaultValue:(defaultvalue) [,]? { var Parameter = require("./Parameter"); return new Parameter(item, membername ? membername[1] : null, defaultValue); }
   / noise item:returntype membername:([ ] membername)? [,]? { var Parameter = require("./Parameter"); return new Parameter(item, membername ? membername[1] : null); }
 returntype
-  = items:[^ ,\n\r\t(){}<>]+ template:([<] templateargs [>])? { return items.join("") + (template ? template.join("") : ""); }
+  = items:[^ ,\n\r\t(){}<>]+ template:([<] templateargs [>])? typeinfo:[*\[\]&]* { return items.join("") + (template ? template.join("") : "") + typeinfo.join(""); }
 templateargs
   = items:templatearg+ { return items; }
 templatearg
@@ -118,7 +118,8 @@ templatearg
 objectname
   = objectname:([A-Za-z_][A-Za-z0-9.]*) { return [objectname[0], objectname[1].join("")].join("") }
 membername
-  = items:([A-Za-z_\*][A-Za-z0-9_]*) { return [items[0], items[1].join("")].join("") }
+  = items:([A-Za-z_\*][A-Za-z0-9_]*) op:[+=*/<>!~^&|,\[\]]* { return [items[0], items[1].join("")].join("") + op.join("")}
+  / "operator" op:[+=*/<>!~^&|,\[\]]+ { return "operator" + op.join("") }
 defaultvalue
   = items:([{}\[\]A-Za-z0-9_\'\"]*) { return items.join("") }
 accessortype
