@@ -110,7 +110,11 @@ methodparameter
   = noise item:returntype membername:([ ] membername)? [=] defaultValue:(defaultvalue) [,]? { var Parameter = require("./Parameter"); return new Parameter(item, membername ? membername[1] : null, defaultValue); }
   / noise item:returntype membername:([ ] membername)? [,]? { var Parameter = require("./Parameter"); return new Parameter(item, membername ? membername[1] : null); }
 returntype
-  = items:[^ ,\n\r\t(){}]+ { return items.join("") }
+  = items:[^ ,\n\r\t(){}<>]+ template:([<] templateargs [>])? { return items.join("") + (template ? template.join("") : ""); }
+templateargs
+  = items:templatearg+ { return items; }
+templatearg
+  = noise item:returntype noise [,]? { return item; }
 objectname
   = objectname:([A-Za-z_][A-Za-z0-9.]*) { return [objectname[0], objectname[1].join("")].join("") }
 membername
