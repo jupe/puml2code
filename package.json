@@ -1,6 +1,6 @@
 {
   "name": "puml2code",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "PlantUML to code generator",
   "main": "index.js",
   "bin": {
