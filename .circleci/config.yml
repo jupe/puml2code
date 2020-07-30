@@ -59,8 +59,8 @@ defaults: &defaults
     - run:
         name: e2e tests
         command: |
-          src/cli.js -i ./examples/sample.puml -l cpp
-          src/cli.js -i ./examples/issue-59.puml -l cpp
+          node src/cli.js -i ./examples/sample.puml -l cpp
+          node src/cli.js -i ./examples/issue-59.puml -l cpp
     #- run:
     #    name: coveralls
     #    command: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
