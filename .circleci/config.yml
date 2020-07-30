@@ -12,6 +12,10 @@ workflows:
           filters:  # required since `deploy` has tag filters AND requires `build`
             tags:
               only: /.*/
+      - test-node12:
+          filters:  # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /.*/
       - test-node-latest:
           filters:  # required since `deploy` has tag filters AND requires `build`
             tags:
@@ -20,6 +24,7 @@ workflows:
           requires:
             - test-node8
             - test-node10
+            - test-node12
             - test-node-latest
           filters:
             tags:
@@ -51,6 +56,11 @@ defaults: &defaults
         environment:
           REPORTER: mocha-circleci-reporter
           MOCHA_FILE: junit/test-results.xml
+    _ run:
+        name: e2e tests
+        command: |
+          src/cli.js -i ./examples/sample.puml -l cpp
+          src/cli.js -i ./examples/issue-59.puml -l cpp
     #- run:
     #    name: coveralls
     #    command: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
@@ -74,6 +84,10 @@ jobs:
     <<: *defaults
     docker:
     - image: circleci/node:10.14.1
+  test-node12:
+    <<: *defaults
+    docker:
+      - image: circleci/node:12.18.1
   test-node-latest:
     <<: *defaults
     docker:
