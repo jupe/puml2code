@@ -40,7 +40,7 @@ describe('cli', () => {
     process.exit.callsFake(() => {
       throw new Error('ok');
     });
-    await cli(['node', 'puml2code', '-a']).catch(() => {});;
+    await cli(['node', 'puml2code', '-a']).catch(() => {});
     expect(process.exit.calledOnceWith(1)).to.be.true;
   });
   inputPumlList.forEach((input) => {
