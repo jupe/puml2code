@@ -36,11 +36,11 @@ describe('cli', () => {
     await cli(['node', 'puml2code', '-h']).catch(() => {});
     expect(process.exit.calledOnceWith(0)).to.be.true;
   });
-  it('invalid args', () => {
+  it('invalid args', async () => {
     process.exit.callsFake(() => {
       throw new Error('ok');
     });
-    cli(['node', 'puml2code', '-a']);
+    await cli(['node', 'puml2code', '-a']).catch(() => {});
     expect(process.exit.calledOnceWith(1)).to.be.true;
   });
   inputPumlList.forEach((input) => {
