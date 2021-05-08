@@ -4,10 +4,6 @@ workflows:
   version: 2
   test-publish:
     jobs:
-      - test-node8:
-          filters:  # required since `deploy` has tag filters AND requires `build`
-            tags:
-              only: /.*/
       - test-node10:
           filters:  # required since `deploy` has tag filters AND requires `build`
             tags:
@@ -20,21 +16,15 @@ workflows:
           filters:  # required since `deploy` has tag filters AND requires `build`
             tags:
               only: /.*/
-      - test-node16:
-          filters:  # required since `deploy` has tag filters AND requires `build`
-            tags:
-              only: /.*/
       - test-node-latest:
           filters:  # required since `deploy` has tag filters AND requires `build`
             tags:
               only: /.*/
       - publish:
           requires:
-            - test-node8
             - test-node10
             - test-node12
             - test-node14
-            - test-node16
             - test-node-latest
           filters:
             tags:
@@ -81,10 +71,6 @@ defaults: &defaults
         path: coverage
         prefix: coverage
 jobs:
-  test-node8:
-    <<: *defaults
-    docker:
-    - image: circleci/node:8.12.0
   test-node10:
     <<: *defaults
     docker:
@@ -97,10 +83,6 @@ jobs:
     <<: *defaults
     docker:
       - image: circleci/node:14
-  test-node16:
-    <<: *defaults
-    docker:
-      - image: circleci/node:16
   test-node-latest:
     <<: *defaults
     docker:
