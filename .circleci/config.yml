@@ -12,6 +12,18 @@ workflows:
           filters:  # required since `deploy` has tag filters AND requires `build`
             tags:
               only: /.*/
+      - test-node12:
+          filters:  # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /.*/
+      - test-node14:
+          filters:  # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /.*/
+      - test-node16:
+          filters:  # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /.*/
       - test-node-latest:
           filters:  # required since `deploy` has tag filters AND requires `build`
             tags:
@@ -20,6 +32,9 @@ workflows:
           requires:
             - test-node8
             - test-node10
+            - test-node12
+            - test-node14
+            - test-node16
             - test-node-latest
           filters:
             tags:
@@ -31,7 +46,7 @@ workflows:
 defaults: &defaults
   working_directory: ~/repo
   docker:
-  - image: circleci/node:8.12.0
+  - image: circleci/node:16
   steps:
     - checkout
     - run: node --version > _tmp_file
@@ -74,6 +89,18 @@ jobs:
     <<: *defaults
     docker:
     - image: circleci/node:10.14.1
+  test-node12:
+    <<: *defaults
+    docker:
+      - image: circleci/node:12
+  test-node14:
+    <<: *defaults
+    docker:
+      - image: circleci/node:14
+  test-node16:
+    <<: *defaults
+    docker:
+      - image: circleci/node:16
   test-node-latest:
     <<: *defaults
     docker:
