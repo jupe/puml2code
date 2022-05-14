@@ -56,6 +56,12 @@ defaults: &defaults
         environment:
           REPORTER: mocha-circleci-reporter
           MOCHA_FILE: junit/test-results.xml
+    - run:
+        name: e2e tests
+        command: |
+          node src/cli.js -i ./examples/sample.puml -l cpp
+          node src/cli.js -i ./examples/issue-67.puml -l cpp
+
     #- run:
     #    name: coveralls
     #    command: cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
